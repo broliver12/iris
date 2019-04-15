@@ -1,4 +1,4 @@
-package com.example.color_value_calculator;
+package com.strasz.color_value_calculator;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

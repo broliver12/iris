@@ -1,11 +1,18 @@
 package com.strasz.color_value_calculator.fragment;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +23,10 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.strasz.color_value_calculator.R;
+import com.strasz.color_value_calculator.main.MainActivity;
 import com.strasz.color_value_calculator.view.IColorSelectorView;
 import com.strasz.color_value_calculator.viewmodel.ColorSelectorViewModel;
 
@@ -25,6 +34,7 @@ import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -49,25 +59,81 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
     TextView cmykResultTextView;
     @BindView(R.id.selector_main_container)
     ConstraintLayout mainContainer;
+    @BindView(R.id.main_toolbar)
+    Toolbar toolbar;
 
+    MenuItem accessGalleryButton;
     private ColorSelectorViewModel viewModel = new ColorSelectorViewModel();
-    private int xval;
-    private int yval;
+    private static int GALLERY = 1000;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.color_selector_fragment, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.color_selector_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        accessGalleryButton = menu.getItem(0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_go_to_gallery) {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getActivity().RESULT_OK){
+            if (requestCode == GALLERY) {
+                Uri uri = data.getData();
+                Picasso.get().load(uri).memoryPolicy(MemoryPolicy.NO_CACHE).fit().centerCrop().into(mainImageView);
+            }
+        }
+    }
+
+    private File uriToImageFile(Uri uri) {
+        String[] filePathColumn = new String[]{MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String filePath = cursor.getString(columnIndex);
+                cursor.close();
+                return new File(filePath);
+            }
+            cursor.close();
+        }
+        return null;
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
-        Picasso.get().load(R.drawable.wwwo_cvs).fit().centerCrop().into(mainImageView);
+//        Picasso.get().load(R.drawable.wwwo_cvs).fit().centerCrop().into(mainImageView);
 
         viewModel.init(this);
 

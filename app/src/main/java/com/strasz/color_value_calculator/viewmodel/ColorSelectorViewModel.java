@@ -19,13 +19,11 @@ public class ColorSelectorViewModel {
 
         Observable<MotionEvent> imageClicked = view.getImageClicked().share();
 
-        xValueObservable = imageClicked.map(event -> (int) event.getX() - view.getXval());
-        yValueObservable = imageClicked.map(event -> (int) event.getY() - view.getYval());
+        xValueObservable = imageClicked.map(event -> (int) event.getX());
 
+        yValueObservable = imageClicked.map(event -> (int) event.getY());
 
-//        xValueObservable.subscribe(x -> System.out.println("__test X VAL: " + x.toString()));
-//        yValueObservable.subscribe(x -> System.out.println("__test Y VAL: " + x.toString()));
-        pixelObservable = imageClicked.map(event -> view.getCurrentImageBitmap().getPixel((int) event.getX() - view.getXval(), (int) event.getY() - view.getYval()));
+        pixelObservable = imageClicked.map(event -> view.getCurrentImageBitmap().getPixel((int) event.getX(), (int) event.getY()));
     }
 
     public Observable<String> xValueText() {
@@ -46,9 +44,50 @@ public class ColorSelectorViewModel {
             int blueValue = Color.blue(x);
             int greenValue = Color.green(x);
 
-            return "RGB: (" + redValue + ", " + greenValue + ", " + blueValue + ")";
+            return String.format("RGB: (%d, %d, %d)", redValue, greenValue, blueValue);
         });
 
+    }
+
+    public Observable<String> hexText() {
+        return pixelObservable.map(x -> {
+            int redValue = Color.red(x);
+            int blueValue = Color.blue(x);
+            int greenValue = Color.green(x);
+
+            return String.format("HEX: #%02X%02X%02X", redValue, greenValue, blueValue);
+        });
+    }
+
+    public Observable<String> cmykText() {
+        return pixelObservable.map(x -> {
+            float redValue = Color.red(x);
+            float blueValue = Color.blue(x);
+            float greenValue = Color.green(x);
+
+            float cyanValue = 1 - (redValue / 255);
+            float magentaValue = 1 - (greenValue / 255);
+            float yellowValue = 1 - (blueValue / 255);
+
+            float kValue = Math.min(Math.min(cyanValue, magentaValue), yellowValue);
+
+            if (kValue != 1) {
+                float sValue = 1 - kValue;
+
+                cyanValue = (cyanValue - kValue) / sValue;
+
+                magentaValue = (magentaValue - kValue) / sValue;
+
+                yellowValue = (yellowValue - kValue) / sValue;
+            }
+
+            int cValue = Math.round(cyanValue * 100);
+            int mValue = Math.round(magentaValue * 100);
+            int yValue = Math.round(yellowValue * 100);
+            int kVal = Math.round(kValue * 100);
+
+            return String.format("CMYK: (%d, %d, %d, %d)", cValue, mValue, yValue, kVal);
+        });
     }
 
 

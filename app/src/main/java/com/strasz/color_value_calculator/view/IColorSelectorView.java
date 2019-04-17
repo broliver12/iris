@@ -10,7 +10,4 @@ public interface IColorSelectorView {
     Observable<MotionEvent> getImageClicked();
 
     Bitmap getCurrentImageBitmap();
-
-    int getXval();
-    int getYval();
 }

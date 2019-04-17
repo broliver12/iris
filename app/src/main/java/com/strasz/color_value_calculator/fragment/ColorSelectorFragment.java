@@ -109,7 +109,7 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
         if (resultCode == getActivity().RESULT_OK){
             if (requestCode == GALLERY) {
                 Uri uri = data.getData();
-                Picasso.get().load(uri).memoryPolicy(MemoryPolicy.NO_CACHE).fit().centerCrop().into(mainImageView);
+                Picasso.get().load(uri).memoryPolicy(MemoryPolicy.NO_CACHE).into(mainImageView);
             }
         }
     }

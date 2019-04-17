@@ -2,9 +2,9 @@ package com.strasz.color_value_calculator.Utils;
 
 import android.graphics.Color;
 
-public class ColorUtils {
+public interface ColorUtils {
 
-    public static String generateRGBString(int colorInput) {
+    static String generateRGBString(int colorInput) {
         int redValue = Color.red(colorInput);
         int blueValue = Color.blue(colorInput);
         int greenValue = Color.green(colorInput);
@@ -12,7 +12,7 @@ public class ColorUtils {
         return String.format("RGB: (%d, %d, %d)", redValue, greenValue, blueValue);
     }
 
-    public static String generateHexString(int colorInput) {
+    static String generateHexString(int colorInput) {
         int redValue = Color.red(colorInput);
         int blueValue = Color.blue(colorInput);
         int greenValue = Color.green(colorInput);
@@ -20,7 +20,7 @@ public class ColorUtils {
         return String.format("HEX: #%02X%02X%02X", redValue, greenValue, blueValue);
     }
 
-    public static String generateCMYKString(int colorInput) {
+    static String generateCMYKString(int colorInput) {
         float redValue = Color.red(colorInput);
         float blueValue = Color.blue(colorInput);
         float greenValue = Color.green(colorInput);

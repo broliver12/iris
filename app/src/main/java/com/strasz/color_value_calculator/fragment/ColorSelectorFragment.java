@@ -26,6 +26,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.strasz.color_value_calculator.R;
+import com.strasz.color_value_calculator.TouchImageView;
 import com.strasz.color_value_calculator.main.MainActivity;
 import com.strasz.color_value_calculator.view.IColorSelectorView;
 import com.strasz.color_value_calculator.viewmodel.ColorSelectorViewModel;
@@ -44,7 +45,7 @@ import io.reactivex.Observable;
 public class ColorSelectorFragment extends BaseFragment implements IColorSelectorView {
 
     @BindView(R.id.main_image_container)
-    ImageView mainImageView;
+    TouchImageView mainImageView;
     @BindView(R.id.selected_color_view)
     TextView selectedColorView;
     @BindView(R.id.x_value_text)
@@ -106,34 +107,17 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == getActivity().RESULT_OK){
+        if (resultCode == getActivity().RESULT_OK) {
             if (requestCode == GALLERY) {
                 Uri uri = data.getData();
-                Picasso.get().load(uri).memoryPolicy(MemoryPolicy.NO_CACHE).into(mainImageView);
+                mainImageView.setImageURI(uri);
             }
         }
-    }
-
-    private File uriToImageFile(Uri uri) {
-        String[] filePathColumn = new String[]{MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String filePath = cursor.getString(columnIndex);
-                cursor.close();
-                return new File(filePath);
-            }
-            cursor.close();
-        }
-        return null;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-//        Picasso.get().load(R.drawable.wwwo_cvs).fit().centerCrop().into(mainImageView);
 
         viewModel.init(this);
 
@@ -141,8 +125,6 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
     }
 
     private void bind() {
-        selectedColorView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark, null));
-
 
         viewModel.xValueText()
                 .subscribe(x -> xValueText.setText(x));

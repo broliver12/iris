@@ -19,7 +19,7 @@ public class ColorSelectorViewModel {
     public void init(IColorSelectorView view) {
         this.view = view;
 
-        Observable<MotionEvent> imageTouched = view.getImageTouched();
+        Observable<MotionEvent> imageTouched = view.getImageTouched().share();
 
         Observable<MotionEvent> downEvents = imageTouched.filter(event -> event.getAction() == MotionEvent.ACTION_DOWN);
 

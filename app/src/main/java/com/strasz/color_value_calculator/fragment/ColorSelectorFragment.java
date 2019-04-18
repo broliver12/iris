@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -66,6 +67,7 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
     MenuItem accessGalleryButton;
     private ColorSelectorViewModel viewModel = new ColorSelectorViewModel();
     private static int GALLERY = 1000;
+    private static int CAMERA = 1001;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -100,7 +102,16 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
 
             return true;
+        } else if (item.getItemId() == R.id.menu_go_to_camera) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+            startActivityForResult(intent, CAMERA);
+
+            return true;
         }
+
         return false;
     }
 
@@ -109,6 +120,10 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getActivity().RESULT_OK) {
             if (requestCode == GALLERY) {
+                Uri uri = data.getData();
+                mainImageView.setImageURI(uri);
+            } else if (requestCode == CAMERA) {
+                int i = 7;
                 Uri uri = data.getData();
                 mainImageView.setImageURI(uri);
             }

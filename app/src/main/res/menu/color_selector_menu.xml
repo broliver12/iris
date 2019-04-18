@@ -8,4 +8,10 @@
         android:title="@string/menu_item_title_go_to_gallery"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menu_go_to_camera"
+        android:icon="@drawable/camera_lens_white"
+        android:title="@string/menu_item_title_go_to_camera"
+        app:showAsAction="always" />
+
 </menu>

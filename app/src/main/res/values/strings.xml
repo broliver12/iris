@@ -10,6 +10,7 @@
     <string name="color_selector_toolbar_title">Color Selector</string>
 
     <string name="menu_item_title_go_to_gallery">goToGallery</string>
+    <string name="menu_item_title_go_to_camera">goToCamera</string>
 
     <string name="format_rgb_result" formatted="false">RGB: (%d, %d, %d)</string>
     <string name="format_hex_result" formatted="false">HEX: #%02X%02X%02X</string>

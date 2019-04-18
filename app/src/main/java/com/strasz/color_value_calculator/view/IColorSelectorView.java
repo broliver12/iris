@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 
 public interface IColorSelectorView {
 
-    Observable<MotionEvent> getImageClicked();
+    Observable<MotionEvent> getImageTouched();
 
     Bitmap getCurrentImageBitmap();
 }

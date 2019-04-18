@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import com.strasz.color_value_calculator.Utils.ColorUtils;
 import com.strasz.color_value_calculator.view.IColorSelectorView;
 
+import androidx.core.util.Pair;
 import io.reactivex.Observable;
 
 public class ColorSelectorViewModel {
@@ -18,7 +19,11 @@ public class ColorSelectorViewModel {
     public void init(IColorSelectorView view) {
         this.view = view;
 
-        Observable<MotionEvent> imageClicked = view.getImageClicked().share();
+        Observable<MotionEvent> imageTouched = view.getImageTouched();
+
+        Observable<MotionEvent> downEvents = imageTouched.filter(event -> event.getAction() == MotionEvent.ACTION_DOWN);
+
+        Observable<MotionEvent> imageClicked = downEvents;
 
         xValueObservable = imageClicked.map(event -> (int) event.getX());
 

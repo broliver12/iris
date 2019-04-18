@@ -146,8 +146,8 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
     }
 
 
-    public Observable<MotionEvent> getImageClicked() {
-        return RxView.touches(mainImageView).filter(event -> event.getAction() == MotionEvent.ACTION_DOWN);
+    public Observable<MotionEvent> getImageTouched() {
+        return RxView.touches(mainImageView);
     }
 
     public Bitmap getCurrentImageBitmap() {

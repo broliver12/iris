@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Color Selector" />
+        app:title="@string/color_selector_toolbar_title" />
 
     <com.strasz.color_value_calculator.TouchImageView
         android:id="@+id/main_image_container"
@@ -39,10 +39,10 @@
         android:id="@+id/pixel_value_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundPurple"
         android:paddingStart="4dp"
         android:paddingTop="4dp"
         android:paddingEnd="4dp"
+        android:theme="@style/PurpleBackground"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_30">
 
         <TextView
@@ -50,22 +50,20 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:background="@color/spaceGrey"
-            android:text="X"
+            android:text="@string/init_text_x"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:theme="@style/DarkButton" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:background="@color/spaceGrey"
-            android:text="Y"
+            android:text="@string/init_text_y"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:theme="@style/DarkButton" />
 
 
     </LinearLayout>
@@ -74,8 +72,8 @@
         android:id="@+id/pixel_value_et_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundPurple"
         android:padding="4dp"
+        android:theme="@style/PurpleBackground"
         app:layout_constraintTop_toBottomOf="@id/pixel_value_title_layout">
 
         <TextView
@@ -84,10 +82,9 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:background="@color/spaceGrey"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:theme="@style/DarkButton" />
 
         <TextView
             android:id="@+id/y_value_text"
@@ -95,20 +92,19 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:background="@color/spaceGrey"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:theme="@style/DarkButton" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/backgroundPurple"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:paddingBottom="4dp"
+        android:theme="@style/PurpleBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pixel_value_et_layout">
 
@@ -124,8 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="@color/spaceGrey"
-                android:textColor="@android:color/black" />
+                android:theme="@style/DarkButton" />
 
         </FrameLayout>
 
@@ -141,39 +136,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/spaceGrey"
                 android:gravity="center_vertical"
                 android:paddingStart="30dp"
-                android:text="HEX:"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:text="@string/init_text_hex"
+                android:textSize="20sp"
+                android:theme="@style/DarkButton" />
 
             <TextView
                 android:id="@+id/rgb_result"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/spaceGrey"
                 android:gravity="center_vertical"
                 android:paddingStart="30dp"
-                android:text="RGB:"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:text="@string/init_text_rgb"
+                android:textSize="20sp"
+                android:theme="@style/DarkButton" />
 
             <TextView
                 android:id="@+id/cmyk_result"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/spaceGrey"
                 android:gravity="center_vertical"
                 android:paddingStart="30dp"
-                android:text="CMYK:"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:text="@string/init_text_cmyk"
+                android:textSize="20sp"
+                android:theme="@style/DarkButton" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

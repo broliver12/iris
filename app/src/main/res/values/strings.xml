@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">color_value_calculator</string>
+
+    <string name="init_text_x">X</string>
+    <string name="init_text_y">Y</string>
+    <string name="init_text_hex">HEX:</string>
+    <string name="init_text_rgb">RGB:</string>
+    <string name="init_text_cmyk">CMYK:</string>
+
+    <string name="color_selector_toolbar_title">Color Selector</string>
+
+    <string name="menu_item_title_go_to_gallery">goToGallery</string>
+
+    <string name="format_rgb_result" formatted="false">RGB: (%d, %d, %d)</string>
+    <string name="format_hex_result" formatted="false">HEX: #%02X%02X%02X</string>
+    <string name="format_cmyk_result" formatted="false">CMYK: (%d, %d, %d, %d)</string>
+
 </resources>

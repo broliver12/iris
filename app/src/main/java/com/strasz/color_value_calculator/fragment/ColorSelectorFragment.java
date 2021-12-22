@@ -33,11 +33,16 @@ import com.strasz.color_value_calculator.view.IColorSelectorView;
 import com.strasz.color_value_calculator.viewmodel.ColorSelectorViewModel;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
+
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
@@ -68,6 +73,8 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
     private ColorSelectorViewModel viewModel = new ColorSelectorViewModel();
     private static int GALLERY = 1000;
     private static int CAMERA = 1001;
+
+    private Uri photoFilePath = null;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -103,8 +110,19 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
 
             return true;
         } else if (item.getItemId() == R.id.menu_go_to_camera) {
+
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            File photoFile = null;
+            try {
+                photoFile = createImageFileInAppDir();
+            } finally {
+                // nothing to do
+            }
+            if(photoFile != null){
+                photoFilePath = FileProvider.getUriForFile(getContext(), "com.example.android.provider", photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoFilePath);
+            }
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 //            File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
 //            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
             startActivityForResult(intent, CAMERA);
@@ -113,6 +131,12 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
         }
 
         return false;
+    }
+
+    private File createImageFileInAppDir() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File imagePath = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return new File(imagePath, "JPEG_${timeStamp}_" + ".jpg");
     }
 
     @Override
@@ -124,8 +148,11 @@ public class ColorSelectorFragment extends BaseFragment implements IColorSelecto
                 mainImageView.setImageURI(uri);
             } else if (requestCode == CAMERA) {
                 int i = 7;
-                Uri uri = data.getData();
-                mainImageView.setImageURI(uri);
+                if(photoFilePath != null ){
+                    mainImageView.setImageURI(photoFilePath);
+                } else {
+                    // error
+                }
             }
         }
     }

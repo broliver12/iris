@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/color_selector_toolbar_title" />
 
-    <com.strasz.color_value_calculator.TouchImageView
+    <com.strasz.colorpicker.presentation.TouchImageView
         android:id="@+id/main_image_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -8,20 +8,19 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.*
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import com.jakewharton.rxbinding2.view.RxView
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.activity.MainActivity
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.color_selector_fragment.*
+import kotlinx.android.synthetic.main.fragment_color_picker.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ColorPickerFragment : BaseFragment(), IColorSelectorView {
+class ColorPickerFragment(
+        private val navCallback: () -> Unit
+) : BaseFragment(), IColorSelectorView {
 
     var accessGalleryButton: MenuItem? = null
     private val viewModel = ColorPickerViewModel()
@@ -34,7 +33,7 @@ class ColorPickerFragment : BaseFragment(), IColorSelectorView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         setHasOptionsMenu(true)
-        val view = inflater.inflate(R.layout.color_selector_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_color_picker, container, false)
         return view
     }
 
@@ -66,6 +65,10 @@ class ColorPickerFragment : BaseFragment(), IColorSelectorView {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             startActivityForResult(intent, CAMERA)
             return true
+        } else if (item.itemId == R.id.menu_go_to_favorites){
+            activity as MainActivity
+            // present color list fragment
+            navCallback.invoke()
         }
         return false
     }

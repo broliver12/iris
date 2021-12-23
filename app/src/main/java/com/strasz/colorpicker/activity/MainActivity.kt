@@ -4,18 +4,31 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.strasz.colorpicker.R
+import com.strasz.colorpicker.presentation.ColorListFragment
 import com.strasz.colorpicker.presentation.ColorPickerFragment
 
+
 class MainActivity : AppCompatActivity() {
-    private val colorPickerFragment: ColorPickerFragment = ColorPickerFragment()
+    private val colorPickerFragment: ColorPickerFragment = ColorPickerFragment{
+        showColorListFragment()
+    }
+    private val colorListFragment: ColorListFragment = ColorListFragment{
+        showColorSelectorFragment()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_color_picker)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.spaceGrey)
+
         showColorSelectorFragment()
     }
 
@@ -32,7 +45,16 @@ class MainActivity : AppCompatActivity() {
     private fun showColorSelectorFragment() {
         supportFragmentManager
                 .beginTransaction()
+                .addToBackStack("colorSelector")
                 .replace(R.id.fragmentContainer, colorPickerFragment)
+                .commit()
+    }
+
+    private fun showColorListFragment() {
+        supportFragmentManager
+                .beginTransaction()
+                .addToBackStack("colorList")
+                .replace(R.id.fragmentContainer, colorListFragment)
                 .commit()
     }
 

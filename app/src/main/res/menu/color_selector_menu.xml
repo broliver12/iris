@@ -14,4 +14,10 @@
         android:title="@string/menu_item_title_go_to_camera"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menu_go_to_favorites"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:title="@string/menu_item_title_go_to_favorites"
+        app:showAsAction="always" />
+
 </menu>

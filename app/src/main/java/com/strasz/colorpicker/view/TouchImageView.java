@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.presentation;
+package com.strasz.colorpicker.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.presentation
+package com.strasz.colorpicker.view
 
 import android.app.Activity
 import android.content.Intent
@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.*
+import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding2.view.RxView
 import com.strasz.colorpicker.R
-import com.strasz.colorpicker.activity.MainActivity
+import com.strasz.colorpicker.viewmodel.MainViewModel
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_color_picker.*
 import java.io.File
@@ -19,12 +22,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ColorPickerFragment(
+        private val viewModel: MainViewModel,
         private val navCallback: () -> Unit
-) : BaseFragment(), IColorSelectorView {
+) : Fragment(), IColorPickerView {
 
-    var accessGalleryButton: MenuItem? = null
-    private val viewModel = ColorPickerViewModel()
     private var photoFilePath: Uri? = null
+    @ColorInt
+    private var curColor: Int? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as MainActivity?)!!.setSupportActionBar(main_toolbar)
@@ -37,10 +41,34 @@ class ColorPickerFragment(
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.bindView(this)
+        saveButton.setOnClickListener {
+            setSaveButtonVisibility(false)
+        }
+        cancelButton.setOnClickListener {
+            setSaveButtonVisibility(true)
+        }
+        confirmButton.setOnClickListener {
+            setSaveButtonVisibility(true)
+
+            Toast.makeText(requireContext(), "Saved Successfully!", Toast.LENGTH_LONG).show();
+
+            curColor?.let{
+                viewModel.confirmSave(it)
+            }
+        }
+    }
+
+    private fun setSaveButtonVisibility(setVisible: Boolean) {
+        confirmSaveLinearLayout.visibility = if (setVisible) View.GONE else View.VISIBLE
+        saveButton.visibility = if (setVisible) View.VISIBLE else View.GONE
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.color_selector_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-        accessGalleryButton = menu.getItem(0)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,7 +93,7 @@ class ColorPickerFragment(
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             startActivityForResult(intent, CAMERA)
             return true
-        } else if (item.itemId == R.id.menu_go_to_favorites){
+        } else if (item.itemId == R.id.menu_go_to_favorites) {
             activity as MainActivity
             // present color list fragment
             navCallback.invoke()
@@ -85,10 +113,12 @@ class ColorPickerFragment(
             if (requestCode == GALLERY) {
                 val uri = data!!.data
                 main_image_container.setImageURI(uri)
+                curColor = null
             } else if (requestCode == CAMERA) {
                 val i = 7
                 if (photoFilePath != null) {
                     main_image_container.setImageURI(photoFilePath)
+                    curColor = null
                 } else {
                     // error
                 }
@@ -98,7 +128,6 @@ class ColorPickerFragment(
 
     override fun onStart() {
         super.onStart()
-        viewModel.bindView(this)
         bind()
     }
 
@@ -110,7 +139,10 @@ class ColorPickerFragment(
         viewModel.rgbText()
                 .subscribe { x: String -> rgb_result.text = x }
         viewModel.pixelColorInt()
-                .subscribe { x: Int -> selected_color_view.setBackgroundColor(x) }
+                .subscribe { x: Int ->
+                    selected_color_view.setBackgroundColor(x)
+                    curColor = x
+                }
         viewModel.hexText()
                 .subscribe { x: String -> hex_result.text = x }
         viewModel.cmykText()
@@ -126,6 +158,7 @@ class ColorPickerFragment(
             main_image_container.isDrawingCacheEnabled = false
             return currentScreenshot
         }
+
 
     companion object {
         private const val GALLERY = 1000

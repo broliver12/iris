@@ -5,22 +5,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/spaceGrey">
 
-    <androidx.appcompat.widget.Toolbar
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/saved_color_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/spaceGrey"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            app:layout_constraintDimensionRatio="H1,1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/colorListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/saved_color_toolbar"
+        app:layout_constraintTop_toBottomOf="@id/saved_color_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

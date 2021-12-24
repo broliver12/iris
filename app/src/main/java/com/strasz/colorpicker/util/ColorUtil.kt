@@ -11,7 +11,7 @@ abstract class ColorUtil {
             val blueValue = Color.blue(colorInput)
             val greenValue = Color.green(colorInput)
 
-            return String.format("RGB: [%d, %d, %d]", redValue, greenValue, blueValue)
+            return String.format("[%d, %d, %d]", redValue, greenValue, blueValue)
         }
 
         fun generateHexString(colorInput: Int): String {
@@ -19,7 +19,7 @@ abstract class ColorUtil {
             val blueValue = Color.blue(colorInput)
             val greenValue = Color.green(colorInput)
 
-            return String.format("HEX: #%02X%02X%02X", redValue, greenValue, blueValue)
+            return String.format("#%02X%02X%02X", redValue, greenValue, blueValue)
         }
 
         fun generateCMYKString(colorInput: Int): String {
@@ -44,7 +44,7 @@ abstract class ColorUtil {
             val yValue = round(yellowValue * 100).toInt()
             val kVal = round(kValue * 100).toInt()
 
-            return String.format("CMYK: [%d, %d, %d, %d]", cValue, mValue, yValue, kVal)
+            return String.format("[%d, %d, %d, %d]", cValue, mValue, yValue, kVal)
         }
     }
 }

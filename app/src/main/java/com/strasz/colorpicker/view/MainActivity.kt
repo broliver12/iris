@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
     private fun showColorSelectorFragment() {
         supportFragmentManager
                 .beginTransaction()
-                .addToBackStack("colorSelector")
                 .replace(R.id.fragmentContainer, colorPickerFragment)
                 .commit()
     }

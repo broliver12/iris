@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_saved_colors.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class ColorListFragment(
@@ -25,15 +27,18 @@ class ColorListFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        colorListRecyclerView.apply{
-            layoutManager = GridLayoutManager(requireContext(), 4)
+        colorListRecyclerView.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = listAdapter
         }
 
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             navCallback.invoke()
         }
-
-        listAdapter.submitList(mainViewModel.getList())
+        mainViewModel.getList().subscribe { x ->
+            MainScope().launch {
+                listAdapter.submitList(x)
+            }
+        }
     }
 }

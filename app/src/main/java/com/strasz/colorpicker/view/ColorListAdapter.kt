@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.database.ColorModel
+import com.strasz.colorpicker.util.ColorUtil.Companion.generateCMYKString
 import com.strasz.colorpicker.util.ColorUtil.Companion.generateHexString
+import com.strasz.colorpicker.util.ColorUtil.Companion.generateRGBString
 import kotlinx.android.synthetic.main.view_fav_color_tile.view.*
 
 class ColorListAdapter : ListAdapter<ColorModel, ColorModelViewHolder>(ColorListItemDiffUtil()) {
@@ -27,9 +29,25 @@ class ColorListAdapter : ListAdapter<ColorModel, ColorModelViewHolder>(ColorList
 
 class ColorModelViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
+    private var showAllInfo = false
     fun bind(model: ColorModel){
+        showAllInfo = false
+        view.rootView.setOnClickListener {
+            if(showAllInfo){
+                showAllInfo = false
+                view.tileInfoContainer.visibility = View.GONE
+                view.tileColorView.visibility = View.VISIBLE
+            } else {
+                showAllInfo = true
+                view.tileColorView.visibility = View.INVISIBLE
+                view.tileInfoContainer.visibility = View.VISIBLE
+            }
+        }
         view.tileColorView.setBackgroundColor(model.hexVal)
-        view.tileTextView.text = generateHexString(model.hexVal)
+        view.tileHexTextView.text = generateHexString(model.hexVal)
+        view.tileRGBTextView.text = "RGB: \n" + generateRGBString(model.hexVal)
+        view.tileCMYKTextView.text = "CMYK: \n" + generateCMYKString(model.hexVal)
+        view.tileInfoContainer.visibility = View.GONE
     }
 }
 

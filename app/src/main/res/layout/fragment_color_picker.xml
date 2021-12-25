@@ -76,180 +76,183 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/hex_title_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/selected_color_container"
-            app:layout_constraintTop_toBottomOf="@id/posLinearLayout">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:text="@string/init_text_hex"
-                android:textSize="14sp"
-                android:theme="@style/DarkButton" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:text="@string/init_text_rgb"
-                android:textSize="14sp"
-                android:theme="@style/DarkButton" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:text="@string/init_text_cmyk"
-                android:textSize="14sp"
-                android:theme="@style/DarkButton" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/hex_result_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/infoContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_weight="2"
-            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_white_rounder_rect"
+            app:layout_constraintBottom_toTopOf="@id/saveWidgetContainer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/hex_title_layout"
-            app:layout_constraintTop_toBottomOf="@id/posLinearLayout">
-
-            <TextView
-                android:id="@+id/hex_result"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="4dp"
-                android:paddingTop="8dp"
-                android:textSize="14sp"
-                android:theme="@style/DarkButton" />
-
-            <TextView
-                android:id="@+id/rgb_result"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="4dp"
-                android:paddingTop="8dp"
-                android:textSize="14sp"
-                android:theme="@style/DarkButton" />
-
-            <TextView
-                android:id="@+id/cmyk_result"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="4dp"
-                android:paddingTop="8dp"
-                android:textSize="14sp"
-                android:theme="@style/DarkButton" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/posLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
             app:layout_constraintStart_toEndOf="@id/selected_color_container"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/selected_color_container">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/posLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[ "
-                android:textSize="12sp"
-                android:theme="@style/DarkButton" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="24dp"
-                android:layout_height="wrap_content"
-                android:text="@string/init_text_x"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:theme="@style/DarkButton" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[ "
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/x_value_text"
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/init_text_x"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/x_value_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=", "
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/init_text_y"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/y_value_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ]"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hex_title_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:theme="@style/DarkButton" />
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/posLinearLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingTop="8dp"
+                    android:text="@string/init_text_hex"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingTop="8dp"
+                    android:text="@string/init_text_rgb"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingTop="8dp"
+                    android:text="@string/init_text_cmyk"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hex_result_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text=", "
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:theme="@style/DarkButton" />
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/hex_title_layout"
+                app:layout_constraintTop_toBottomOf="@id/posLinearLayout">
 
-            <TextView
-                android:layout_width="24dp"
-                android:layout_height="wrap_content"
-                android:text="@string/init_text_y"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:theme="@style/DarkButton" />
+                <TextView
+                    android:id="@+id/hex_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingStart="4dp"
+                    android:paddingTop="8dp"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/y_value_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:theme="@style/DarkButton" />
+                <TextView
+                    android:id="@+id/rgb_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingStart="4dp"
+                    android:paddingTop="8dp"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" ]"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:theme="@style/DarkButton" />
+                <TextView
+                    android:id="@+id/cmyk_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingStart="4dp"
+                    android:paddingTop="8dp"
+                    android:textSize="14sp" />
 
-        </LinearLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/saveWidgetContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/infoContainer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/selected_color_container"
-            app:layout_constraintTop_toBottomOf="@id/hex_result_layout">
+            app:layout_constraintStart_toEndOf="@id/selected_color_container">
 
             <TextView
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:background="@drawable/green_rounded_rect"
                 android:gravity="center"
                 android:text="SAVE"
@@ -259,8 +262,6 @@
                 android:id="@+id/confirmSaveLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
 

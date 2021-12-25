@@ -1,12 +1,18 @@
 package com.strasz.colorpicker.viewmodel
 
+import android.net.Uri
 import android.view.MotionEvent
 import androidx.annotation.ColorInt
+import androidx.core.net.toUri
 import com.strasz.colorpicker.database.ColorModel
 import com.strasz.colorpicker.database.ColorModelDao
 import com.strasz.colorpicker.view.IColorPickerView
 import com.strasz.colorpicker.util.ColorUtil
 import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -18,6 +24,22 @@ class MainViewModel(
     private lateinit var yValueObservable: Observable<Int>
     private lateinit var pixelObservable: Observable<Int>
     private var view: IColorPickerView? = null
+    private val changedImage = PublishSubject.create<Uri>()
+    private var lastImage: Uri? = null
+    val selectedImage: Observable<Uri> = changedImage
+
+//            .startWith(
+//            if(lastImage != null) lastImage else "".toUri()
+//    )
+
+    fun resub() {
+        changedImage.onNext(lastImage ?: "".toUri())
+    }
+
+    fun changeImage(newImageUrl: Uri) {
+        lastImage = newImageUrl
+        changedImage.onNext(newImageUrl)
+    }
 
     fun bindView(view: IColorPickerView) {
         this.view = view
@@ -53,18 +75,12 @@ class MainViewModel(
     }
 
     fun confirmSave(@ColorInt color: Int) {
-        GlobalScope.launch{
+        GlobalScope.launch {
             database.insert(ColorModel(color, color))
         }
     }
 
-    fun getList() : List<ColorModel> {
-        val list = arrayListOf<ColorModel>()
-        runBlocking {
-            GlobalScope.launch{
-                list.addAll(database.getAll())
-            }
-        }
-        return list
+    fun getList(): Observable<List<ColorModel>> {
+        return Observable.just(Unit).observeOn(Schedulers.io()).flatMap { database.getAll() }
     }
 }

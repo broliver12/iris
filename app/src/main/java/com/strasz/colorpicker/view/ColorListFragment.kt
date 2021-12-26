@@ -9,16 +9,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_saved_colors.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-
 
 class ColorListFragment(
         private val mainViewModel: MainViewModel,
         private val navCallback: () -> Unit
 ) : Fragment() {
 
-    private val listAdapter = ColorListAdapter()
+    private val listAdapter = ColorListAdapter {
+        GlobalScope.launch {
+            mainViewModel.delete(it)
+        }
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)

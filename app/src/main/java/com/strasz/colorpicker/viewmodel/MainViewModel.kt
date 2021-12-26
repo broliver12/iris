@@ -28,9 +28,9 @@ class MainViewModel(
     private var lastImage: Uri? = null
     val selectedImage: Observable<Uri> = changedImage
 
-//            .startWith(
-//            if(lastImage != null) lastImage else "".toUri()
-//    )
+    fun delete(model: ColorModel){
+        database.delete(model)
+    }
 
     fun resub() {
         changedImage.onNext(lastImage ?: "".toUri())

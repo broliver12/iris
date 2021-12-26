@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <View
             android:id="@+id/tileColorView"
@@ -64,6 +62,55 @@
                 app:layout_constraintTop_toBottomOf="@id/tileRGBTextView"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tileRemoveContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/border_white_rounder_rect"
+            app:layout_constraintEnd_toEndOf="@id/tileColorView"
+            app:layout_constraintStart_toStartOf="@id/tileColorView"
+            app:layout_constraintBottom_toBottomOf="@id/tileColorView"
+            app:layout_constraintTop_toTopOf="@id/tileColorView">
+
+            <TextView
+                android:id="@+id/tileDeleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:text="Delete"
+                android:background="@drawable/red_rounded_rect"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tileCancelDeleteTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tileCancelDeleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:text="Cancel"
+                android:background="@drawable/button"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tileDeleteTextView"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/tileHexTextView"
             android:layout_width="match_parent"
@@ -80,6 +127,5 @@
             app:layout_constraintTop_toBottomOf="@id/tileColorView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

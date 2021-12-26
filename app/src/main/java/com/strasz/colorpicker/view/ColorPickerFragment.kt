@@ -115,8 +115,10 @@ class ColorPickerFragment(
             // present color list fragment
             navCallback.invoke()
         }
-        return false
+        return true
     }
+
+
 
     private fun createImageFileInAppDir(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())

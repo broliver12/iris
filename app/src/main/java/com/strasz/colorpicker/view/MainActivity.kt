@@ -8,10 +8,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.room.Room
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.database.App
-import com.strasz.colorpicker.database.ColorDb
 import com.strasz.colorpicker.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     // Initialize shared ViewModel
     private val viewModel = MainViewModel(
-            App.colorDb
+            App.colorDao
     )
 
     // Initialize color picker UI

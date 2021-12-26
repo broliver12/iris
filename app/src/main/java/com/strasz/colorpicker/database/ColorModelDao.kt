@@ -1,15 +1,19 @@
 package com.strasz.colorpicker.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.strasz.colorpicker.database.App.Companion.colorTableName
 import io.reactivex.Observable
-import io.reactivex.Single
 
 @Dao
 interface ColorModelDao {
-    @Query("SELECT * FROM colors")
+    @Query("SELECT * FROM $colorTableName")
     fun getAll(): Observable<List<ColorModel>>
 
-    @Query("SELECT * FROM colors WHERE hex_str LIKE :hex")
+    @Query("SELECT * FROM $colorTableName WHERE hex_str LIKE :hex")
     fun findByName(hex: String): ColorModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

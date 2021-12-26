@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.database.ColorModel
-import java.util.Collections.addAll
 
 class ColorListAdapter(
         private val removeFromDbCallback: (ColorModel) -> Unit
@@ -15,11 +14,17 @@ class ColorListAdapter(
         return ColorTileViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.view_fav_color_tile, parent, false)
         ) {
-            val list: MutableList<ColorModel> = arrayListOf<ColorModel>().apply{
+            val list: MutableList<ColorModel> = arrayListOf<ColorModel>().apply {
                 addAll(currentList)
             }
-            removeFromDbCallback.invoke(list[it])
-            submitList(list.apply{ removeAt(it) })
+            removeFromDbCallback.invoke(
+                    list[it]
+            )
+            submitList(
+                    list.apply {
+                        removeAt(it)
+                    }
+            )
         }
     }
 
@@ -28,7 +33,7 @@ class ColorListAdapter(
     }
 }
 
-class ColorListItemDiffUtil() : DiffUtil.ItemCallback<ColorModel>() {
+class ColorListItemDiffUtil : DiffUtil.ItemCallback<ColorModel>() {
     override fun areItemsTheSame(p0: ColorModel, p1: ColorModel): Boolean {
         return p0 == p1
     }

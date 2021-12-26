@@ -2,19 +2,23 @@ package com.strasz.colorpicker.database
 
 import android.app.Application
 import androidx.room.Room
+import com.strasz.colorpicker.R
 
 class App : Application() {
     companion object {
-        // Initialize database
         private lateinit var db: ColorDb
-        const val colorDbName = "colorDb"
-        val colorDb
+        lateinit var colorDbName: String
+            internal set
+        const val colorTableName: String = "colorTable"
+        val colorDao
             get() = db.colorModelDao()
     }
 
     override fun onCreate() {
         super.onCreate();
-        db = synchronized(Unit){
+        colorDbName = resources.getString(R.string.database_name)
+
+        db = synchronized(Unit) {
             Room.databaseBuilder(
                     applicationContext,
                     ColorDb::class.java,

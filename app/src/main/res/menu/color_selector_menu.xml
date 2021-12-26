@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/menu_go_to_gallery"
-        android:icon="@drawable/folder_white"
+        android:icon="@drawable/ic_baseline_folder_24"
         android:title="@string/menu_item_title_go_to_gallery"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_go_to_camera"
-        android:icon="@drawable/camera_lens_white"
+        android:icon="@drawable/ic_baseline_camera_24"
         android:title="@string/menu_item_title_go_to_camera"
         app:showAsAction="always" />
 

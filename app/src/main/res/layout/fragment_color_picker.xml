@@ -26,14 +26,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_toolbar">
 
-
         <com.strasz.colorpicker.view.TouchImageView
             android:id="@+id/main_image_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </FrameLayout>
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_horizontal_30"
@@ -236,7 +234,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/saveWidgetContainer"
             android:layout_width="0dp"
@@ -286,7 +283,6 @@
                     android:text="X"
                     android:textSize="16sp" />
             </LinearLayout>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

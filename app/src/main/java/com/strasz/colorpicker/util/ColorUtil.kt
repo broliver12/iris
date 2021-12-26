@@ -6,30 +6,25 @@ import kotlin.math.round
 
 abstract class ColorUtil {
     companion object {
-        fun generateRGBString(colorInput: Int): String {
-            val redValue = Color.red(colorInput)
-            val blueValue = Color.blue(colorInput)
-            val greenValue = Color.green(colorInput)
+        private val Int.r
+            get() = Color.red(this)
+        private val Int.g
+            get() = Color.green(this)
+        private val Int.b
+            get() = Color.blue(this)
 
-            return String.format("[%d, %d, %d]", redValue, greenValue, blueValue)
+        fun generateRGBString(colorInput: Int): String {
+            return String.format("[%d, %d, %d]", colorInput.r, colorInput.g, colorInput.b)
         }
 
         fun generateHexString(colorInput: Int): String {
-            val redValue = Color.red(colorInput)
-            val blueValue = Color.blue(colorInput)
-            val greenValue = Color.green(colorInput)
-
-            return String.format("#%02X%02X%02X", redValue, greenValue, blueValue)
+            return String.format("#%02X%02X%02X", colorInput.r, colorInput.g, colorInput.b)
         }
 
         fun generateCMYKString(colorInput: Int): String {
-            val redValue = Color.red(colorInput).toFloat()
-            val blueValue = Color.blue(colorInput).toFloat()
-            val greenValue = Color.green(colorInput).toFloat()
-
-            var cyanValue = 1 - redValue / 255
-            var magentaValue = 1 - greenValue / 255
-            var yellowValue = 1 - blueValue / 255
+            var cyanValue = 1 - colorInput.r.toFloat() / 255
+            var magentaValue = 1 - colorInput.b.toFloat() / 255
+            var yellowValue = 1 - colorInput.g.toFloat() / 255
 
             val kValue = min(min(cyanValue, magentaValue), yellowValue)
             if (kValue != 1f) {
@@ -39,12 +34,9 @@ abstract class ColorUtil {
                 yellowValue = (yellowValue - kValue) / sValue
             }
 
-            val cValue = round(cyanValue * 100).toInt()
-            val mValue = round(magentaValue * 100).toInt()
-            val yValue = round(yellowValue * 100).toInt()
-            val kVal = round(kValue * 100).toInt()
-
-            return String.format("[%d, %d, %d, %d]", cValue, mValue, yValue, kVal)
+            return String.format("[%d, %d, %d, %d]", cyanValue.rnd(), magentaValue.rnd(), yellowValue.rnd(), kValue.rnd())
         }
+
+        private fun Float.rnd() = round(this * 100).toInt()
     }
 }

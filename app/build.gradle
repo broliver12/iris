@@ -1,23 +1,26 @@
-plugins{
+plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+//    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion ver.version.compileSdkVersion
     defaultConfig {
-        applicationId "com.strasz.colorpicker"
-        minSdkVersion 26
-        targetSdkVersion 32
-        versionCode 1
-        versionName "1.0"
+        applicationId ver.project.appId
+        minSdkVersion ver.version.minSdkVersion
+        targetSdkVersion ver.version.targetSdkVersion
+        versionCode ver.version.versionCode
+        versionName ver.version.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding = true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -26,7 +29,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = ver.version.kotlinJvmTarget
     }
     kapt {
         generateStubs = true
@@ -34,37 +37,35 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation "androidx.recyclerview:recyclerview:1.2.1"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    //kotlin
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    //testing
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // Androidx
+    implementation ver.deps.coreKtx
+    implementation ver.deps.appCompat
+    implementation ver.deps.constraintLayout
+    implementation ver.deps.recyclerView
+    implementation ver.deps.room
 
-    // TODO: Replace with glide
-    //picasso
-    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'jp.wasabeef:picasso-transformations:2.1.2'
+    // Misc
+    implementation ver.deps.kotlinStdlib
+    implementation ver.deps.gson
+    implementation ver.deps.coroutines
 
-    //Rx
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.0'
-    implementation 'com.tspoon.traceur:traceur:1.0.1'
+    // Picasso
+    implementation ver.deps.picasso
+    implementation ver.deps.picassoDownloader
+    implementation ver.deps.picassoTransforms
 
-    implementation 'com.google.code.gson:gson:2.8.7'
+    // Rx
+    implementation ver.deps.rxAndroid
+    implementation ver.deps.rxBinding
+    implementation ver.deps.rxRoom
+    implementation ver.deps.traceur
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    // Annotation Processor
+    kapt ver.deps.roomAp
 
-    //database (Room)
-    implementation 'androidx.room:room-runtime:2.4.0'
-    kapt 'androidx.room:room-compiler:2.4.0'
-    implementation 'androidx.room:room-rxjava2:2.4.0'
-
-
+    // Test
+    testImplementation ver.deps.junit
+    androidTestImplementation ver.deps.textExt
+    androidTestImplementation ver.deps.espresso
 }

@@ -6,43 +6,49 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.strasz.colorpicker.R
-import com.strasz.colorpicker.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_saved_colors.*
+import com.strasz.colorpicker.databinding.FragmentColorListBinding
+import com.strasz.colorpicker.viewmodel.IColorListViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ColorListFragment(
-        private val mainViewModel: MainViewModel,
+        private val viewModel: IColorListViewModel,
         private val navCallback: () -> Unit
 ) : Fragment() {
 
+    private lateinit var binding: FragmentColorListBinding
+
     private val listAdapter = ColorListAdapter {
         GlobalScope.launch {
-            mainViewModel.delete(it)
+            viewModel.removeColor(it)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_saved_colors, container, false)
+        binding = FragmentColorListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        colorListRecyclerView.apply {
-            layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.colorListRecyclerView.apply {
+            layoutManager = GridLayoutManager(requireContext(), GRID_SPAN)
             adapter = listAdapter
         }
 
-        backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
             navCallback.invoke()
         }
-        mainViewModel.getList().subscribe { x ->
+        viewModel.getSavedColorList().subscribe { x ->
             MainScope().launch {
                 listAdapter.submitList(x)
             }
         }
+    }
+
+    companion object {
+        private const val GRID_SPAN = 3
     }
 }

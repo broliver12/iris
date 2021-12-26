@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.strasz.colorpicker.R
 import com.strasz.colorpicker.database.ColorModel
+import com.strasz.colorpicker.databinding.ViewFavColorTileBinding
 
 class ColorListAdapter(
         private val removeFromDbCallback: (ColorModel) -> Unit
 ) : ListAdapter<ColorModel, ColorTileViewHolder>(ColorListItemDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorTileViewHolder {
         return ColorTileViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.view_fav_color_tile, parent, false)
+                ViewFavColorTileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ) {
             val list: MutableList<ColorModel> = arrayListOf<ColorModel>().apply {
                 addAll(currentList)

@@ -26,22 +26,9 @@ class MainViewModel(
     private var view: IColorPickerView? = null
     private val changedImage = PublishSubject.create<Uri>()
     private var lastImage: Uri? = null
-    val selectedImage: Observable<Uri> = changedImage
+    override val selectedImage: Observable<Uri> = changedImage
 
-    fun delete(model: ColorModel){
-        database.delete(model)
-    }
-
-    fun resub() {
-        changedImage.onNext(lastImage ?: "".toUri())
-    }
-
-    fun changeImage(newImageUrl: Uri) {
-        lastImage = newImageUrl
-        changedImage.onNext(newImageUrl)
-    }
-
-    fun bindView(view: IColorPickerView) {
+    override fun bindView(view: IColorPickerView) {
         this.view = view
         val imageTouched = view.imageTouched.share()
         val downEvents = imageTouched.filter { event: MotionEvent -> event.action == MotionEvent.ACTION_DOWN }
@@ -50,37 +37,50 @@ class MainViewModel(
         pixelObservable = downEvents.map { event: MotionEvent -> view.currentImageBitmap.getPixel(event.x.toInt(), event.y.toInt()) }
     }
 
-    fun xValueText(): Observable<String> {
+    override fun reloadLastImage() {
+        changedImage.onNext(lastImage ?: "".toUri())
+    }
+
+    override fun updateCurrentImage(newImageUrl: Uri) {
+        lastImage = newImageUrl
+        changedImage.onNext(newImageUrl)
+    }
+
+    override fun xValueText(): Observable<String> {
         return xValueObservable.map { x: Int -> x.toString() }
     }
 
-    fun yValueText(): Observable<String> {
+    override fun yValueText(): Observable<String> {
         return yValueObservable.map { x: Int -> x.toString() }
     }
 
-    fun pixelColorInt(): Observable<Int> {
+    override fun pixelColorInt(): Observable<Int> {
         return pixelObservable
     }
 
-    fun rgbText(): Observable<String> {
+    override fun rgbText(): Observable<String> {
         return pixelObservable.map { colorInput: Int -> ColorUtil.generateRGBString(colorInput) }
     }
 
-    fun hexText(): Observable<String> {
+    override fun hexText(): Observable<String> {
         return pixelObservable.map { colorInput: Int -> ColorUtil.generateHexString(colorInput) }
     }
 
-    fun cmykText(): Observable<String> {
+    override fun cmykText(): Observable<String> {
         return pixelObservable.map { colorInput: Int -> ColorUtil.generateCMYKString(colorInput) }
     }
 
-    fun confirmSave(@ColorInt color: Int) {
+    override fun confirmSave(@ColorInt color: Int) {
         GlobalScope.launch {
             database.insert(ColorModel(color, color))
         }
     }
 
-    fun getList(): Observable<List<ColorModel>> {
+    override fun getSavedColorList(): Observable<List<ColorModel>> {
         return Observable.just(Unit).observeOn(Schedulers.io()).flatMap { database.getAll() }
+    }
+
+    override fun removeColor(model: ColorModel){
+        database.delete(model)
     }
 }

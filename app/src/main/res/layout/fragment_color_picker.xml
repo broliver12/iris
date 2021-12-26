@@ -4,13 +4,13 @@
     android:id="@+id/selector_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spaceGrey">
+    android:background="@color/navyDark">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/spaceGrey"
+        android:background="@color/navyDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

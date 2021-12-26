@@ -14,19 +14,18 @@ import com.strasz.colorpicker.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-
     // Initialize shared ViewModel
     private val viewModel = MainViewModel(
             App.colorDao
     )
 
     // Initialize color picker UI
-    private val colorPickerFragment: ColorPickerFragment = ColorPickerFragment(viewModel){
+    private val colorPickerFragment: ColorPickerFragment = ColorPickerFragment(viewModel) {
         showColorListFragment()
     }
 
     // Initialize saved color list UI
-    private val colorListFragment: ColorListFragment = ColorListFragment(viewModel){
+    private val colorListFragment: ColorListFragment = ColorListFragment(viewModel) {
         onBackPressed()
     }
 
@@ -35,21 +34,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Set android systems status bar color
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.spaceGrey)
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.navyDark)
+        }
 
         // Show main page
         showColorSelectorFragment()
     }
 
+
     override fun onStart() {
         super.onStart()
         // Make sure we have read/write access for external storage
         if (!checkPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    READ_STORAGE_REQ_CODE
+            )
         }
         if (!checkPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 2)
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    WRITE_STORAGE_REQ_CODE
+            )
         }
     }
 
@@ -73,4 +83,9 @@ class MainActivity : AppCompatActivity() {
     // Helper function for checking system permissions
     private fun checkPermission(context: Context, permission: String) =
             ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+
+    companion object {
+        private const val READ_STORAGE_REQ_CODE = 1
+        private const val WRITE_STORAGE_REQ_CODE = 2
+    }
 }

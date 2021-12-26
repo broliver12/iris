@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">color_value_calculator</string>
+    <string name="app_name">Iris</string>
     <string name="database_name">colorDatabase</string>
     <string name="color_table_name">colorTable</string>
 
@@ -14,9 +14,4 @@
     <string name="menu_item_title_go_to_favorites">Favourites</string>
     <string name="menu_item_title_go_to_gallery">Gallery</string>
     <string name="menu_item_title_go_to_camera">Camera</string>
-
-    <string name="format_rgb_result" formatted="false">[%d, %d, %d]</string>
-    <string name="format_hex_result" formatted="false">#%02X%02X%02X</string>
-    <string name="format_cmyk_result" formatted="false">[%d, %d, %d, %d]</string>
-
 </resources>

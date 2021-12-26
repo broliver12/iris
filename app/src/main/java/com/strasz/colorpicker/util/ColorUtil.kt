@@ -13,15 +13,15 @@ abstract class ColorUtil {
         private val Int.b
             get() = Color.blue(this)
 
-        fun generateRGBString(colorInput: Int): String {
+        fun formatRgb(colorInput: Int): String {
             return String.format("[%d, %d, %d]", colorInput.r, colorInput.g, colorInput.b)
         }
 
-        fun generateHexString(colorInput: Int): String {
+        fun formatHex(colorInput: Int): String {
             return String.format("#%02X%02X%02X", colorInput.r, colorInput.g, colorInput.b)
         }
 
-        fun generateCMYKString(colorInput: Int): String {
+        fun formatCmyk(colorInput: Int): String {
             var cyanValue = 1 - colorInput.r.toFloat() / 255
             var magentaValue = 1 - colorInput.b.toFloat() / 255
             var yellowValue = 1 - colorInput.g.toFloat() / 255

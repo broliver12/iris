@@ -1,6 +1,5 @@
 package com.strasz.colorpicker.view
 
-import android.service.quicksettings.Tile
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.strasz.colorpicker.database.ColorModel
@@ -36,9 +35,9 @@ class ColorTileViewHolder(private val binding: ViewFavColorTileBinding, private 
                 cb.invoke(absoluteAdapterPosition)
             }
             tileColorView.setBackgroundColor(model.hexVal)
-            tileHexTextView.text = ColorUtil.generateHexString(model.hexVal)
-            tileRGBTextView.text = "RGB: \n" + ColorUtil.generateRGBString(model.hexVal)
-            tileCMYKTextView.text = "CMYK: \n" + ColorUtil.generateCMYKString(model.hexVal)
+            tileHexTextView.text = ColorUtil.formatHex(model.hexVal)
+            tileRGBTextView.text = "RGB: \n" + ColorUtil.formatRgb(model.hexVal)
+            tileCMYKTextView.text = "CMYK: \n" + ColorUtil.formatCmyk(model.hexVal)
         }
 
         updateUiState(

@@ -9,11 +9,11 @@
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
 
-    <application android:name="com.strasz.colorpicker.database.App">
+    <application android:name="com.strasz.colorpicker.database.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/iris_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/iris_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <provider
@@ -27,7 +27,6 @@
             </meta-data>
         </provider>
         <activity android:name="com.strasz.colorpicker.view.MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

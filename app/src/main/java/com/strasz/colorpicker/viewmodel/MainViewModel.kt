@@ -6,16 +6,13 @@ import androidx.annotation.ColorInt
 import androidx.core.net.toUri
 import com.strasz.colorpicker.database.ColorModel
 import com.strasz.colorpicker.database.ColorModelDao
-import com.strasz.colorpicker.view.IColorPickerView
 import com.strasz.colorpicker.util.ColorUtil
+import com.strasz.colorpicker.view.IColorPickerView
 import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MainViewModel(
         private val database: ColorModelDao
@@ -59,15 +56,15 @@ class MainViewModel(
     }
 
     override fun rgbText(): Observable<String> {
-        return pixelObservable.map { colorInput: Int -> ColorUtil.generateRGBString(colorInput) }
+        return pixelObservable.map { colorInput: Int -> ColorUtil.formatRgb(colorInput) }
     }
 
     override fun hexText(): Observable<String> {
-        return pixelObservable.map { colorInput: Int -> ColorUtil.generateHexString(colorInput) }
+        return pixelObservable.map { colorInput: Int -> ColorUtil.formatHex(colorInput) }
     }
 
     override fun cmykText(): Observable<String> {
-        return pixelObservable.map { colorInput: Int -> ColorUtil.generateCMYKString(colorInput) }
+        return pixelObservable.map { colorInput: Int -> ColorUtil.formatCmyk(colorInput) }
     }
 
     override fun confirmSave(@ColorInt color: Int) {
@@ -80,7 +77,7 @@ class MainViewModel(
         return Observable.just(Unit).observeOn(Schedulers.io()).flatMap { database.getAll() }
     }
 
-    override fun removeColor(model: ColorModel){
-        database.delete(model)
+    override fun removeColor(color: ColorModel) {
+        database.delete(color)
     }
 }

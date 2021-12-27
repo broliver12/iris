@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -23,7 +23,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.OverScroller
 import android.widget.Scroller
 import androidx.appcompat.widget.AppCompatImageView
-import com.strasz.colorpicker.view.TouchImageView.*
+import com.strasz.iris.view.TouchImageView.*
 
 class TouchImageView @JvmOverloads constructor(
         context: Context,

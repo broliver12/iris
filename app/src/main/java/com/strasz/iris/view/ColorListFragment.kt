@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.strasz.colorpicker.databinding.FragmentColorListBinding
-import com.strasz.colorpicker.viewmodel.IColorListViewModel
+import com.strasz.iris.databinding.FragmentColorListBinding
+import com.strasz.iris.viewmodel.IColorListViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch

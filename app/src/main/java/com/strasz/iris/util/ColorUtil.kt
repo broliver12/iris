@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.util
+package com.strasz.iris.util
 
 import android.graphics.Color
 import kotlin.math.min

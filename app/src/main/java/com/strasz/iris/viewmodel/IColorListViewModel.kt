@@ -1,6 +1,6 @@
-package com.strasz.colorpicker.viewmodel
+package com.strasz.iris.viewmodel
 
-import com.strasz.colorpicker.database.ColorModel
+import com.strasz.iris.database.ColorModel
 import io.reactivex.Observable
 
 interface IColorListViewModel {

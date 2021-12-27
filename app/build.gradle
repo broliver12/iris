@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-//    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 
@@ -49,11 +48,6 @@ dependencies {
     implementation ver.deps.kotlinStdlib
     implementation ver.deps.gson
     implementation ver.deps.coroutines
-
-    // Picasso
-    implementation ver.deps.picasso
-    implementation ver.deps.picassoDownloader
-    implementation ver.deps.picassoTransforms
 
     // Rx
     implementation ver.deps.rxAndroid

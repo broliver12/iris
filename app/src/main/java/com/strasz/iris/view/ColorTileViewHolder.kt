@@ -1,10 +1,10 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.strasz.colorpicker.database.ColorModel
-import com.strasz.colorpicker.databinding.ViewFavColorTileBinding
-import com.strasz.colorpicker.util.ColorUtil
+import com.strasz.iris.database.ColorModel
+import com.strasz.iris.databinding.ViewFavColorTileBinding
+import com.strasz.iris.util.ColorUtil
 
 class ColorTileViewHolder(private val binding: ViewFavColorTileBinding, private val cb: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 

@@ -1,10 +1,9 @@
-package com.strasz.colorpicker.database
+package com.strasz.iris.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 
 @Database(entities = [ColorModel::class], version = 1, exportSchema = true)
-abstract class ColorDb : RoomDatabase() {
+abstract class ColorDatabase : RoomDatabase() {
     abstract fun colorModelDao(): ColorModelDao
 }

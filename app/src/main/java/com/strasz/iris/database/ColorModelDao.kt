@@ -1,11 +1,11 @@
-package com.strasz.colorpicker.database
+package com.strasz.iris.database
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.strasz.colorpicker.database.App.Companion.colorTableName
+import com.strasz.iris.database.App.Companion.colorTableName
 import io.reactivex.Observable
 
 @Dao

@@ -1,8 +1,8 @@
-package com.strasz.colorpicker.viewmodel
+package com.strasz.iris.viewmodel
 
 import android.net.Uri
 import androidx.annotation.ColorInt
-import com.strasz.colorpicker.view.IColorPickerView
+import com.strasz.iris.view.IColorPickerView
 import io.reactivex.Observable
 
 interface IColorPickerViewModel {

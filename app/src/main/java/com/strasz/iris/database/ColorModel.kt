@@ -1,10 +1,10 @@
-package com.strasz.colorpicker.database
+package com.strasz.iris.database
 
 import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.strasz.colorpicker.database.App.Companion.colorTableName
+import com.strasz.iris.database.App.Companion.colorTableName
 
 @Entity(tableName = colorTableName)
 data class ColorModel(

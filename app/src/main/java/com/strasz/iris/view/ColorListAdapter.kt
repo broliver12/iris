@@ -1,12 +1,11 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.strasz.colorpicker.R
-import com.strasz.colorpicker.database.ColorModel
-import com.strasz.colorpicker.databinding.ViewFavColorTileBinding
+import com.strasz.iris.database.ColorModel
+import com.strasz.iris.databinding.ViewFavColorTileBinding
 
 class ColorListAdapter(
         private val removeFromDbCallback: (ColorModel) -> Unit

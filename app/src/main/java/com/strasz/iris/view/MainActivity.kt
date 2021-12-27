@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.Manifest
 import android.content.Context
@@ -8,9 +8,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.strasz.colorpicker.R
-import com.strasz.colorpicker.database.App
-import com.strasz.colorpicker.viewmodel.MainViewModel
+import com.strasz.iris.R
+import com.strasz.iris.database.App
+import com.strasz.iris.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 

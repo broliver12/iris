@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.graphics.Bitmap
 import android.view.MotionEvent

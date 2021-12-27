@@ -1,4 +1,4 @@
-package com.strasz.colorpicker.view
+package com.strasz.iris.view
 
 import android.app.Activity
 import android.content.Intent
@@ -20,9 +20,9 @@ import androidx.annotation.ColorInt
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding2.view.RxView
-import com.strasz.colorpicker.R
-import com.strasz.colorpicker.databinding.FragmentColorPickerBinding
-import com.strasz.colorpicker.viewmodel.IColorPickerViewModel
+import com.strasz.iris.R
+import com.strasz.iris.databinding.FragmentColorPickerBinding
+import com.strasz.iris.viewmodel.IColorPickerViewModel
 import io.reactivex.Observable
 import java.io.File
 import java.text.SimpleDateFormat

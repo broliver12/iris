@@ -1,13 +1,14 @@
-package com.strasz.colorpicker.viewmodel
+package com.strasz.iris.viewmodel
 
 import android.net.Uri
 import android.view.MotionEvent
 import androidx.annotation.ColorInt
 import androidx.core.net.toUri
-import com.strasz.colorpicker.database.ColorModel
-import com.strasz.colorpicker.database.ColorModelDao
-import com.strasz.colorpicker.util.ColorUtil
-import com.strasz.colorpicker.view.IColorPickerView
+import androidx.lifecycle.ViewModel
+import com.strasz.iris.database.ColorModel
+import com.strasz.iris.database.ColorModelDao
+import com.strasz.iris.util.ColorUtil
+import com.strasz.iris.view.IColorPickerView
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
         private val database: ColorModelDao
-) : IColorPickerViewModel, IColorListViewModel {
+) : ViewModel(), IColorPickerViewModel, IColorListViewModel {
     private lateinit var xValueObservable: Observable<Int>
     private lateinit var yValueObservable: Observable<Int>
     private lateinit var pixelObservable: Observable<Int>

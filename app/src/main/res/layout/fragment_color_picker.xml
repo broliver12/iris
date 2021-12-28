@@ -31,6 +31,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <com.strasz.iris.view.CornerOverlayView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/navyDark" />
+
     </FrameLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -48,31 +53,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_30">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:id="@+id/selected_color_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/black_rounded_rect"
+            android:layout_marginBottom="8dp"
             android:maxWidth="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H1,1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/selected_color_view"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="H1,1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/black_rounded_rect"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/selected_color_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <com.strasz.iris.view.CornerOverlayView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/navyDark"
+                        app:borderColor="@color/black"
+                        app:borderWidth="8"
+                        app:outerCornerRadius="24" />
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/infoContainer"
@@ -101,16 +125,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:text="[ "
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="24dp"
                     android:layout_height="wrap_content"
                     android:text="@string/init_text_x"
-                    android:textColor="@color/white"
                     android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
                 <TextView
@@ -125,32 +149,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=", "
-                    android:textColor="@color/white"
                     android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="24dp"
                     android:layout_height="wrap_content"
                     android:text="@string/init_text_y"
-                    android:textColor="@color/white"
                     android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/y_value_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" ]"
-                    android:textColor="@color/white"
                     android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -171,9 +195,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="@color/white"
                     android:paddingTop="8dp"
                     android:text="@string/init_text_hex"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -181,9 +205,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="@color/white"
                     android:paddingTop="8dp"
                     android:text="@string/init_text_rgb"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -191,9 +215,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="@color/white"
                     android:paddingTop="8dp"
                     android:text="@string/init_text_cmyk"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -217,8 +241,8 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingStart="4dp"
-                    android:textColor="@color/white"
                     android:paddingTop="8dp"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -228,8 +252,8 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingStart="4dp"
-                    android:textColor="@color/white"
                     android:paddingTop="8dp"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -239,8 +263,8 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingStart="4dp"
-                    android:textColor="@color/white"
                     android:paddingTop="8dp"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -255,50 +279,19 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/infoContainer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/selected_color_container">
+            app:layout_constraintStart_toEndOf="@id/selected_color_container"
+            app:layout_constraintTop_toBottomOf="@id/infoContainer">
 
             <TextView
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/button"
+                android:background="@drawable/navy_rounded_rect_white_border"
                 android:gravity="center"
-                android:text="SAVE"
+                android:text="@string/save_button_text"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
-
-            <LinearLayout
-                android:id="@+id/confirmSaveLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/confirmButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="2"
-                    android:background="@drawable/button"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="Confirm"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/cancelButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/red_rounded_rect"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="X"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -37,7 +37,6 @@ class ColorListFragment(
             layoutManager = GridLayoutManager(requireContext(), GRID_SPAN)
             adapter = listAdapter
         }
-
         binding.backButton.setOnClickListener {
             navCallback.invoke()
         }

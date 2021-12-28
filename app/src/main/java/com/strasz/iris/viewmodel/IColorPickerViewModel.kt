@@ -27,5 +27,7 @@ interface IColorPickerViewModel {
 
     fun confirmSave(@ColorInt color: Int)
 
+    fun saveOnClick() : Observable<Unit>
+
     val selectedImage: Observable<Uri>
 }

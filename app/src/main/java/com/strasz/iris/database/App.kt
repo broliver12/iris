@@ -17,7 +17,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate();
         colorDbName = resources.getString(R.string.database_name)
-
         db = synchronized(Unit) {
             Room.databaseBuilder(
                     applicationContext,

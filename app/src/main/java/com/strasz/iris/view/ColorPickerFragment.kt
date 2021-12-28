@@ -1,9 +1,9 @@
 package com.strasz.iris.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -26,15 +26,21 @@ import com.strasz.iris.viewmodel.IColorPickerViewModel
 import io.reactivex.Observable
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+
 
 class ColorPickerFragment(
-        private val viewModel: IColorPickerViewModel,
-        private val navCallback: () -> Unit
+    private val viewModel: IColorPickerViewModel,
+    private val navCallback: () -> Unit
 ) : Fragment(), IColorPickerView {
 
     private var photoFilePath: Uri? = null
     private lateinit var binding: FragmentColorPickerBinding
+
+    private var activeSavePress: Boolean = false
 
     @ColorInt
     private var curColor: Int? = null
@@ -43,34 +49,47 @@ class ColorPickerFragment(
         (activity as MainActivity?)!!.setSupportActionBar(binding.mainToolbar)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         setHasOptionsMenu(true)
         binding = FragmentColorPickerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.bindView(this)
-        binding.saveButton.setOnClickListener {
-            curColor?.let {
-                setSaveButtonVisibility(false)
+
+        binding.saveButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.setIsPressed(true)
+                    viewModel.saveOnClick().doOnNext {
+                        if (activeSavePress && curColor != null) {
+                            viewModel.confirmSave(curColor!!)
+                            MainScope().launch {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Saved Successfully!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                v.setIsPressed(false)
+                            }
+                        }
+                    }.subscribe()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.setIsPressed(false)
+                }
             }
-        }
-        binding.cancelButton.setOnClickListener {
-            setSaveButtonVisibility(true)
+            true
         }
 
-        binding.confirmButton.setOnClickListener {
-            setSaveButtonVisibility(true)
-            curColor?.let {
-                Toast.makeText(requireContext(), "Saved Successfully!", Toast.LENGTH_LONG).show();
-                viewModel.confirmSave(
-                        if (Color.alpha(it) == FULL_ALPHA) it else Color.BLACK
-                )
-            }
-        }
         viewModel.selectedImage.subscribe { x ->
             binding.mainImageContainer.setImageURI(x)
         }
@@ -79,11 +98,6 @@ class ColorPickerFragment(
     override fun onResume() {
         super.onResume()
         viewModel.reloadLastImage()
-    }
-
-    private fun setSaveButtonVisibility(setVisible: Boolean) {
-        binding.confirmSaveLinearLayout.visibility = if (setVisible) View.GONE else View.VISIBLE
-        binding.saveButton.visibility = if (setVisible) View.VISIBLE else View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -107,7 +121,11 @@ class ColorPickerFragment(
                 // nothing to do
             }
             if (photoFile != null) {
-                photoFilePath = FileProvider.getUriForFile(requireContext(), "com.example.android.provider", photoFile)
+                photoFilePath = FileProvider.getUriForFile(
+                    requireContext(),
+                    "com.example.android.provider",
+                    photoFile
+                )
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoFilePath)
             }
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
@@ -123,7 +141,7 @@ class ColorPickerFragment(
 
 
     private fun createImageFileInAppDir(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CANADA).format(Date())
         val imagePath = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File(imagePath, "JPEG_\${$timeStamp}_.jpg")
     }
@@ -150,6 +168,7 @@ class ColorPickerFragment(
         bind()
     }
 
+    @SuppressLint("CheckResult")
     private fun bind() {
         viewModel.apply {
             binding.apply {
@@ -165,7 +184,6 @@ class ColorPickerFragment(
                 pixelColorInt().subscribe { x: Int ->
                     selectedColorView.setBackgroundColor(x)
                     curColor = x
-                    setSaveButtonVisibility(true)
                 }
                 hexText().subscribe { x: String ->
                     hexResult.text = x
@@ -190,9 +208,13 @@ class ColorPickerFragment(
             }
         }
 
+    private fun View.setIsPressed(pressed: Boolean) {
+        isPressed = pressed
+        activeSavePress = pressed
+    }
+
     companion object {
         private const val GALLERY_REQ_CODE = 1000
         private const val CAMERA_REQ_CODE = 1001
-        private const val FULL_ALPHA = 255
     }
 }

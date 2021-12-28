@@ -14,4 +14,8 @@
     <string name="menu_item_title_go_to_favorites">Favourites</string>
     <string name="menu_item_title_go_to_gallery">Gallery</string>
     <string name="menu_item_title_go_to_camera">Camera</string>
+
+    <string name="save_button_text">Hold to Save</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="delete_button_text">Delete</string>
 </resources>

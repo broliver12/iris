@@ -8,23 +8,20 @@ import com.strasz.iris.database.ColorModel
 import com.strasz.iris.databinding.ViewFavColorTileBinding
 
 class ColorListAdapter(
-        private val removeFromDbCallback: (ColorModel) -> Unit
+    private val removeFromDbCallback: (ColorModel) -> Unit
 ) : ListAdapter<ColorModel, ColorTileViewHolder>(ColorListItemDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorTileViewHolder {
         return ColorTileViewHolder(
-                ViewFavColorTileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewFavColorTileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ) {
-            val list: MutableList<ColorModel> = arrayListOf<ColorModel>().apply {
+            arrayListOf<ColorModel>().apply {
                 addAll(currentList)
+                removeFromDbCallback.invoke(
+                    this[it]
+                )
+                removeAt(it)
+                submitList(this)
             }
-            removeFromDbCallback.invoke(
-                    list[it]
-            )
-            submitList(
-                    list.apply {
-                        removeAt(it)
-                    }
-            )
         }
     }
 

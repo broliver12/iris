@@ -1,5 +1,6 @@
 package com.strasz.iris.viewmodel
 
+import android.graphics.Color
 import android.net.Uri
 import android.view.MotionEvent
 import androidx.annotation.ColorInt
@@ -12,6 +13,7 @@ import com.strasz.iris.view.IColorPickerView
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -21,18 +23,17 @@ class MainViewModel(
     private lateinit var xValueObservable: Observable<Int>
     private lateinit var yValueObservable: Observable<Int>
     private lateinit var pixelObservable: Observable<Int>
-    private var view: IColorPickerView? = null
+    private lateinit var colorPickerView: IColorPickerView
     private val changedImage = PublishSubject.create<Uri>()
     private var lastImage: Uri? = null
     override val selectedImage: Observable<Uri> = changedImage
 
     override fun bindView(view: IColorPickerView) {
-        this.view = view
-        val imageTouched = view.imageTouched.share()
-        val downEvents = imageTouched.filter { event: MotionEvent -> event.action == MotionEvent.ACTION_DOWN }
-        xValueObservable = downEvents.map { event: MotionEvent -> event.x.toInt() }
-        yValueObservable = downEvents.map { event: MotionEvent -> event.y.toInt() }
-        pixelObservable = downEvents.map { event: MotionEvent -> view.currentImageBitmap.getPixel(event.x.toInt(), event.y.toInt()) }
+        colorPickerView = view
+        val downEvents = colorPickerView.imageTouched.share().filter { e: MotionEvent -> e.action == MotionEvent.ACTION_DOWN }
+        xValueObservable = downEvents.map { e: MotionEvent -> e.x.toInt() }
+        yValueObservable = downEvents.map { e: MotionEvent -> e.y.toInt() }
+        pixelObservable = downEvents.map { e: MotionEvent -> view.currentImageBitmap.getPixel(e.x.toInt(), e.y.toInt()) }
     }
 
     override fun reloadLastImage() {
@@ -69,10 +70,13 @@ class MainViewModel(
     }
 
     override fun confirmSave(@ColorInt color: Int) {
+        val c = if (Color.alpha(color) == FULL_ALPHA) color else Color.BLACK
         GlobalScope.launch {
-            database.insert(ColorModel(color, color))
+            database.insert(ColorModel(c, c))
         }
     }
+
+    override fun saveOnClick() : Observable<Unit> = Observable.just(Unit).delay(SAVE_DELAY_MIILIS, TimeUnit.MILLISECONDS)
 
     override fun getSavedColorList(): Observable<List<ColorModel>> {
         return Observable.just(Unit).observeOn(Schedulers.io()).flatMap { database.getAll() }
@@ -80,5 +84,10 @@ class MainViewModel(
 
     override fun removeColor(color: ColorModel) {
         database.delete(color)
+    }
+
+    companion object {
+        private const val FULL_ALPHA = 255
+        private const val SAVE_DELAY_MIILIS = 2200L
     }
 }

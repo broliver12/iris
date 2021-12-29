@@ -1,54 +1,68 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion ver.version.compileSdkVersion
     defaultConfig {
-        applicationId "com.example.color_value_calculator"
-        minSdkVersion 26
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        applicationId ver.project.appId
+        minSdkVersion ver.version.minSdkVersion
+        targetSdkVersion ver.version.targetSdkVersion
+        versionCode ver.version.versionCode
+        versionName ver.version.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding = true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = ver.version.kotlinJvmTarget
+    }
+    kapt {
+        generateStubs = true
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Androidx
+    implementation ver.deps.coreKtx
+    implementation ver.deps.appCompat
+    implementation ver.deps.constraintLayout
+    implementation ver.deps.recyclerView
+    implementation ver.deps.room
 
-    //testing
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // Misc
+    implementation ver.deps.kotlinStdlib
+    implementation ver.deps.gson
 
+    // Coroutines
+    implementation ver.deps.coroutines
+    implementation ver.deps.viewModelScope
+    implementation ver.deps.lifeCycleScope
 
-    //picasso
-    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'jp.wasabeef:picasso-transformations:2.1.2'
+    // Rx3
+    implementation ver.deps.rxAndroid
+    implementation ver.deps.rxBinding
+    implementation ver.deps.rxRoom
 
+    // Annotation Processor
+    kapt ver.deps.roomAp
 
-
-    //Rx
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.0'
-    implementation 'com.tspoon.traceur:traceur:1.0.1'
-
-    //database (Room)
-    implementation 'androidx.room:room-runtime:2.1.0-alpha06'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha06'
-    implementation 'androidx.room:room-rxjava2:2.1.0-alpha06'
-
-
-    //butterknife
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    // Test
+    testImplementation ver.deps.junit
+    androidTestImplementation ver.deps.testExt
+    androidTestImplementation ver.deps.espresso
 }

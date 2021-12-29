@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/tileColorFrame"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            app:layout_constraintDimensionRatio="W1,1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <View
+                android:id="@+id/tileColorView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.strasz.iris.view.CornerOverlayView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/navy" />
+
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tileInfoContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_rounded_rect_white"
+            app:layout_constraintEnd_toEndOf="@id/tileColorFrame"
+            app:layout_constraintStart_toStartOf="@id/tileColorFrame"
+            app:layout_constraintBottom_toBottomOf="@id/tileColorFrame"
+            app:layout_constraintTop_toTopOf="@id/tileColorFrame">
+
+            <TextView
+                android:id="@+id/tileRGBTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tileCMYKTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tileCMYKTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tileRGBTextView"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tileRemoveContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/border_rounded_rect_white"
+            app:layout_constraintEnd_toEndOf="@id/tileColorFrame"
+            app:layout_constraintStart_toStartOf="@id/tileColorFrame"
+            app:layout_constraintBottom_toBottomOf="@id/tileColorFrame"
+            app:layout_constraintTop_toTopOf="@id/tileColorFrame">
+
+            <TextView
+                android:id="@+id/tileDeleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:text="@string/delete_button_text"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_rounded_rect_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tileCancelDeleteTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tileCancelDeleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="2dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:text="@string/cancel_button_text"
+                android:textColor="@color/white"
+                android:background="@drawable/ripple_white_bg_navy_border_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tileDeleteTextView"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tileHexTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_rounded_rect_white"
+            android:gravity="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tileColorFrame" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

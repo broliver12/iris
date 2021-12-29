@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<paths>
-    <!--This file is used to enable transfer of images between Android Camera and Iris.!-->
-    <external-files-path
-        name="my_images"
-        path="Pictures" />
-</paths>

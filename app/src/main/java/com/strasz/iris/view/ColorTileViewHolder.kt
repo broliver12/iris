@@ -3,10 +3,10 @@ package com.strasz.iris.view
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.strasz.iris.database.ColorModel
-import com.strasz.iris.databinding.ViewFavColorTileBinding
+import com.strasz.iris.databinding.SavedColorTileBinding
 import com.strasz.iris.util.ColorUtil
 
-class ColorTileViewHolder(private val binding: ViewFavColorTileBinding, private val cb: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+class ColorTileViewHolder(private val binding: SavedColorTileBinding, private val cb: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
     private enum class TileState {
         COLOR, INFO, REMOVE

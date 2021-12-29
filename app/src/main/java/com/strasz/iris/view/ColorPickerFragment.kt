@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -18,8 +19,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding3.view.touches
 import com.strasz.iris.R
 import com.strasz.iris.databinding.FragmentColorPickerBinding
 import com.strasz.iris.viewmodel.IColorPickerViewModel
@@ -31,22 +33,24 @@ import java.util.Locale
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-
 class ColorPickerFragment(
     private val viewModel: IColorPickerViewModel,
     private val navCallback: () -> Unit
 ) : Fragment(), IColorPickerView {
 
-    private var photoFilePath: Uri? = null
     private lateinit var binding: FragmentColorPickerBinding
 
+    private var photoFilePath: Uri? = null
     private var activeSavePress: Boolean = false
 
     @ColorInt
     private var curColor: Int? = null
+    private var darkGrey = 0
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as MainActivity?)!!.setSupportActionBar(binding.mainToolbar)
+        darkGrey = ResourcesCompat.getColor(resources, R.color.darkGrey, null)
     }
 
     override fun onCreateView(
@@ -65,29 +69,33 @@ class ColorPickerFragment(
         super.onViewCreated(view, savedInstanceState)
         viewModel.bindView(this)
 
-        binding.saveButton.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    v.setIsPressed(true)
-                    viewModel.saveOnClick().doOnNext {
-                        if (activeSavePress && curColor != null) {
-                            viewModel.confirmSave(curColor!!)
-                            MainScope().launch {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Saved Successfully!",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                v.setIsPressed(false)
+        binding.saveButton.apply {
+            isEnabled = false
+            setTextColor(ResourcesCompat.getColor(resources, R.color.darkGrey, null))
+            setOnTouchListener { saveBtn, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        saveBtn.setIsPressed(true)
+                        viewModel.saveOnClick().doOnNext {
+                            curColor?.apply {
+                                if (activeSavePress) {
+                                    viewModel.confirmSave(
+                                        getSafeColor()
+                                    )
+                                    MainScope().launch {
+                                        showSuccessfulSaveToast()
+                                        saveBtn.setIsPressed(false)
+                                    }
+                                }
                             }
-                        }
-                    }.subscribe()
+                        }.subscribe()
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        saveBtn.setIsPressed(false)
+                    }
                 }
-                MotionEvent.ACTION_UP -> {
-                    v.setIsPressed(false)
-                }
+                true
             }
-            true
         }
 
         viewModel.selectedImage.subscribe { x ->
@@ -153,11 +161,15 @@ class ColorPickerFragment(
                 data?.data?.let {
                     viewModel.updateCurrentImage(it)
                     curColor = null
+                    binding.saveButton.isEnabled = false
+                    binding.saveButton.setTextColor(darkGrey)
                 }
             } else if (requestCode == CAMERA_REQ_CODE) {
                 photoFilePath?.let {
                     viewModel.updateCurrentImage(it)
                     curColor = null
+                    binding.saveButton.isEnabled = false
+                    binding.saveButton.setTextColor(darkGrey)
                 }
             }
         }
@@ -183,6 +195,8 @@ class ColorPickerFragment(
                 }
                 pixelColorInt().subscribe { x: Int ->
                     selectedColorView.setBackgroundColor(x)
+                    saveButton.isEnabled = true
+                    saveButton.setTextColor(Color.WHITE)
                     curColor = x
                 }
                 hexText().subscribe { x: String ->
@@ -196,7 +210,7 @@ class ColorPickerFragment(
     }
 
     override val imageTouched: Observable<MotionEvent>
-        get() = RxView.touches(binding.mainImageContainer)
+        get() = binding.mainImageContainer.touches()
 
     override val currentImageBitmap: Bitmap
         get() {
@@ -213,7 +227,27 @@ class ColorPickerFragment(
         activeSavePress = pressed
     }
 
+    private fun Int.getSafeColor() =
+        if (Color.alpha(this) == FULL_ALPHA) {
+            this
+        } else {
+            ResourcesCompat.getColor(
+                resources,
+                R.color.black,
+                null
+            )
+        }
+
+    private fun showSuccessfulSaveToast() {
+        Toast.makeText(
+            requireContext(),
+            "Saved Successfully!",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
     companion object {
+        private const val FULL_ALPHA = 255
         private const val GALLERY_REQ_CODE = 1000
         private const val CAMERA_REQ_CODE = 1001
     }

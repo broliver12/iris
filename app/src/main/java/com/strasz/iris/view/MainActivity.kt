@@ -16,12 +16,12 @@ class MainActivity : AppCompatActivity() {
 
     // Initialize shared ViewModel
     private val viewModel = MainViewModel(
-            App.colorDao
+        App.colorDao
     )
 
     // Initialize color picker UI
     private val colorPickerFragment: ColorPickerFragment = ColorPickerFragment(viewModel) {
-        showColorListFragment()
+        showSavedColorsPage()
     }
 
     // Initialize saved color list UI
@@ -33,14 +33,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set android systems status bar color
+        // Set Android status bar color
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.navyDark)
+            statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.navy)
         }
 
         // Show main page
-        showColorSelectorFragment()
+        showMainPage()
     }
 
 
@@ -49,40 +49,40 @@ class MainActivity : AppCompatActivity() {
         // Make sure we have read/write access for external storage
         if (!checkPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_STORAGE_REQ_CODE
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                READ_STORAGE_REQ_CODE
             )
         }
         if (!checkPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    WRITE_STORAGE_REQ_CODE
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                WRITE_STORAGE_REQ_CODE
             )
         }
     }
 
     // Navigate to main page
-    private fun showColorSelectorFragment() {
+    private fun showMainPage() {
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, colorPickerFragment)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, colorPickerFragment)
+            .commit()
     }
 
     // Navigate to saved color list page
-    private fun showColorListFragment() {
+    private fun showSavedColorsPage() {
         supportFragmentManager
-                .beginTransaction()
-                .addToBackStack("colorList")
-                .replace(R.id.fragmentContainer, colorListFragment)
-                .commit()
+            .beginTransaction()
+            .addToBackStack("colorList")
+            .replace(R.id.fragmentContainer, colorListFragment)
+            .commit()
     }
 
     // Helper function for checking system permissions
     private fun checkPermission(context: Context, permission: String) =
-            ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
     companion object {
         private const val READ_STORAGE_REQ_CODE = 1

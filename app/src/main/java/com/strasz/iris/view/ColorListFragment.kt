@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strasz.iris.databinding.FragmentColorListBinding
 import com.strasz.iris.viewmodel.IColorListViewModel
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -20,7 +20,7 @@ class ColorListFragment(
     private lateinit var binding: FragmentColorListBinding
 
     private val listAdapter = ColorListAdapter {
-        GlobalScope.launch {
+        lifecycleScope.launch {
             viewModel.removeColor(it)
         }
     }

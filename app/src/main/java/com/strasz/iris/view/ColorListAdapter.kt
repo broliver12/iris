@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.strasz.iris.database.ColorModel
-import com.strasz.iris.databinding.ViewFavColorTileBinding
+import com.strasz.iris.databinding.SavedColorTileBinding
 
 class ColorListAdapter(
     private val removeFromDbCallback: (ColorModel) -> Unit
 ) : ListAdapter<ColorModel, ColorTileViewHolder>(ColorListItemDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorTileViewHolder {
         return ColorTileViewHolder(
-            ViewFavColorTileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            SavedColorTileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ) {
             arrayListOf<ColorModel>().apply {
                 addAll(currentList)
@@ -31,11 +31,6 @@ class ColorListAdapter(
 }
 
 class ColorListItemDiffUtil : DiffUtil.ItemCallback<ColorModel>() {
-    override fun areItemsTheSame(p0: ColorModel, p1: ColorModel): Boolean {
-        return p0 == p1
-    }
-
-    override fun areContentsTheSame(p0: ColorModel, p1: ColorModel): Boolean {
-        return p0.id == p1.id
-    }
+    override fun areItemsTheSame(c0: ColorModel, c1: ColorModel) = c0 == c1
+    override fun areContentsTheSame(c0: ColorModel, c1: ColorModel) = c0.id == c1.id
 }

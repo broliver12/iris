@@ -4,13 +4,13 @@
     android:id="@+id/selector_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/navyDark">
+    android:background="@color/navy">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/navyDark"
+        android:background="@color/navy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        android:background="@drawable/black_rounded_rect"
+        android:background="@drawable/shape_rounded_rect_black"
         app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         <com.strasz.iris.view.CornerOverlayView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/navyDark" />
+            android:background="@color/navy" />
 
     </FrameLayout>
 
@@ -73,7 +73,7 @@
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/black_rounded_rect"
+                    android:background="@drawable/shape_rounded_rect_black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,7 @@
                     <com.strasz.iris.view.CornerOverlayView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/navyDark"
+                        android:background="@color/navy"
                         app:borderColor="@color/black"
                         app:borderWidth="8"
                         app:outerCornerRadius="24" />
@@ -106,7 +106,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/border_white_rounder_rect"
+            android:background="@drawable/border_rounded_rect_white"
             app:layout_constraintBottom_toTopOf="@id/saveWidgetContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/selected_color_container"
@@ -287,7 +287,7 @@
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/navy_rounded_rect_white_border"
+                android:background="@drawable/save_button_selector"
                 android:gravity="center"
                 android:text="@string/save_button_text"
                 android:textColor="@color/white"

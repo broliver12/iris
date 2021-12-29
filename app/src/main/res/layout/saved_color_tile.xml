@@ -28,7 +28,7 @@
             <com.strasz.iris.view.CornerOverlayView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/navyDark" />
+                android:background="@color/navy" />
 
         </FrameLayout>
 
@@ -36,7 +36,7 @@
             android:id="@+id/tileInfoContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/border_white_rounder_rect"
+            android:background="@drawable/border_rounded_rect_white"
             app:layout_constraintEnd_toEndOf="@id/tileColorFrame"
             app:layout_constraintStart_toStartOf="@id/tileColorFrame"
             app:layout_constraintBottom_toBottomOf="@id/tileColorFrame"
@@ -79,7 +79,7 @@
             android:layout_height="0dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:background="@drawable/border_white_rounder_rect"
+            android:background="@drawable/border_rounded_rect_white"
             app:layout_constraintEnd_toEndOf="@id/tileColorFrame"
             app:layout_constraintStart_toStartOf="@id/tileColorFrame"
             app:layout_constraintBottom_toBottomOf="@id/tileColorFrame"
@@ -97,7 +97,7 @@
                 android:gravity="center"
                 android:text="@string/delete_button_text"
                 android:textColor="@color/white"
-                android:background="@drawable/red_rounded_rect"
+                android:background="@drawable/shape_rounded_rect_red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/tileCancelDeleteTextView"
                 app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +115,7 @@
                 android:gravity="center"
                 android:text="@string/cancel_button_text"
                 android:textColor="@color/white"
-                android:background="@drawable/navy_rounded_rect_white_border"
+                android:background="@drawable/ripple_white_bg_navy_border_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +129,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/border_white_rounder_rect"
+            android:background="@drawable/border_rounded_rect_white"
             android:gravity="center"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

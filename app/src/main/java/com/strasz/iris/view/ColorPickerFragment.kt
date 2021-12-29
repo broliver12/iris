@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -17,10 +18,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding3.view.touches
 import com.strasz.iris.R
 import com.strasz.iris.databinding.FragmentColorPickerBinding
@@ -30,7 +33,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ColorPickerFragment(
@@ -47,9 +49,32 @@ class ColorPickerFragment(
     private var curColor: Int? = null
     private var darkGrey = 0
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (activity as MainActivity?)!!.setSupportActionBar(binding.mainToolbar)
+    private val galleryResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let {
+                    viewModel.updateCurrentImage(it)
+                    curColor = null
+                    binding.saveButton.isEnabled = false
+                    binding.saveButton.setTextColor(darkGrey)
+                }
+            }
+        }
+
+    private val cameraResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                photoFilePath?.let {
+                    viewModel.updateCurrentImage(it)
+                    curColor = null
+                    binding.saveButton.isEnabled = false
+                    binding.saveButton.setTextColor(darkGrey)
+                }
+            }
+        }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         darkGrey = ResourcesCompat.getColor(resources, R.color.darkGrey, null)
     }
 
@@ -67,6 +92,7 @@ class ColorPickerFragment(
     @SuppressLint("ClickableViewAccessibility", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity?)!!.setSupportActionBar(binding.mainToolbar)
         viewModel.bindView(this)
 
         binding.saveButton.apply {
@@ -82,7 +108,7 @@ class ColorPickerFragment(
                                     viewModel.confirmSave(
                                         getSafeColor()
                                     )
-                                    MainScope().launch {
+                                    lifecycleScope.launch {
                                         showSuccessfulSaveToast()
                                         saveBtn.setIsPressed(false)
                                     }
@@ -114,65 +140,43 @@ class ColorPickerFragment(
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_go_to_gallery) {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQ_CODE)
-            return true
-        } else if (item.itemId == R.id.menu_go_to_camera) {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            var photoFile: File? = null
-            photoFile = try {
-                createImageFileInAppDir()
-            } finally {
-                // nothing to do
+        when (item.itemId) {
+            R.id.menu_go_to_gallery -> {
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                galleryResultLauncher.launch(intent)
             }
-            if (photoFile != null) {
-                photoFilePath = FileProvider.getUriForFile(
-                    requireContext(),
-                    "com.example.android.provider",
-                    photoFile
-                )
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoFilePath)
+            R.id.menu_go_to_camera -> {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                val photoFile: File? = try {
+                    createImageFileInAppDir()
+                } finally {
+                    // nothing to do
+                }
+                if (photoFile != null) {
+                    photoFilePath = FileProvider.getUriForFile(
+                        requireContext(),
+                        "com.example.android.provider",
+                        photoFile
+                    )
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoFilePath)
+                }
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                cameraResultLauncher.launch(intent)
             }
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            startActivityForResult(intent, CAMERA_REQ_CODE)
-            return true
-        } else if (item.itemId == R.id.menu_go_to_favorites) {
-            activity as MainActivity
-            // present color list fragment
-            navCallback.invoke()
+            R.id.menu_go_to_favorites -> {
+                activity as MainActivity
+                navCallback.invoke()
+            }
         }
         return true
     }
-
 
     private fun createImageFileInAppDir(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CANADA).format(Date())
         val imagePath = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File(imagePath, "JPEG_\${$timeStamp}_.jpg")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GALLERY_REQ_CODE) {
-                data?.data?.let {
-                    viewModel.updateCurrentImage(it)
-                    curColor = null
-                    binding.saveButton.isEnabled = false
-                    binding.saveButton.setTextColor(darkGrey)
-                }
-            } else if (requestCode == CAMERA_REQ_CODE) {
-                photoFilePath?.let {
-                    viewModel.updateCurrentImage(it)
-                    curColor = null
-                    binding.saveButton.isEnabled = false
-                    binding.saveButton.setTextColor(darkGrey)
-                }
-            }
-        }
     }
 
     override fun onStart() {
@@ -215,10 +219,9 @@ class ColorPickerFragment(
     override val currentImageBitmap: Bitmap
         get() {
             binding.mainImageContainer.apply {
-                isDrawingCacheEnabled = true
-                val currentScreenshot = Bitmap.createBitmap(drawingCache)
-                isDrawingCacheEnabled = false
-                return currentScreenshot
+                val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                draw(Canvas(bitmap))
+                return bitmap
             }
         }
 
@@ -248,7 +251,5 @@ class ColorPickerFragment(
 
     companion object {
         private const val FULL_ALPHA = 255
-        private const val GALLERY_REQ_CODE = 1000
-        private const val CAMERA_REQ_CODE = 1001
     }
 }

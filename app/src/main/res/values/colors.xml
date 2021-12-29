@@ -8,4 +8,5 @@
     <color name="darkGrey">#222222</color>
     <color name="lightGrey">#777777</color>
     <color name="clear">#00000000</color>
+    <color name="transparentWhite">#33ffffff</color>
 </resources>

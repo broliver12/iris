@@ -14,6 +14,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -75,7 +76,7 @@ class MainViewModel(
     }
 
     override fun confirmSave(@ColorInt color: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             database.insert(ColorModel(color, color))
         }
     }
@@ -88,7 +89,9 @@ class MainViewModel(
     }
 
     override fun removeColor(color: ColorModel) {
-        database.delete(color)
+        viewModelScope.launch(Dispatchers.IO) {
+            database.delete(color)
+        }
     }
 
     companion object {

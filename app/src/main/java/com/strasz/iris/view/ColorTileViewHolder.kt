@@ -2,6 +2,7 @@ package com.strasz.iris.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.strasz.iris.R
 import com.strasz.iris.database.ColorModel
 import com.strasz.iris.databinding.SavedColorTileBinding
 import com.strasz.iris.util.ColorUtil
@@ -36,8 +37,8 @@ class ColorTileViewHolder(private val binding: SavedColorTileBinding, private va
             }
             tileColorView.setBackgroundColor(model.hexVal)
             tileHexTextView.text = ColorUtil.formatHex(model.hexVal)
-            tileRGBTextView.text = "RGB: \n" + ColorUtil.formatRgb(model.hexVal)
-            tileCMYKTextView.text = "CMYK: \n" + ColorUtil.formatCmyk(model.hexVal)
+            tileRGBTextView.text = root.context.getString(R.string.rgb_field_format, ColorUtil.formatRgb(model.hexVal))
+            tileCMYKTextView.text = root.context.getString(R.string.cmyk_field_format, ColorUtil.formatCmyk(model.hexVal))
         }
 
         updateUiState(

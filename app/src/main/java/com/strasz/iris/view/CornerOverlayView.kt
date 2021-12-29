@@ -36,7 +36,7 @@ class CornerOverlayView(
     private var innerRectF: RectF? = null
 
     init {
-        getResources(attrs)
+        parseXmlAttributes(attrs)
         setWillNotDraw(false)
         setLayerType(LAYER_TYPE_HARDWARE, null)
         clipPath.fillType = Path.FillType.WINDING
@@ -57,7 +57,7 @@ class CornerOverlayView(
                             right.toFloat() - marginRight - dpToPx(borderWidthDp),
                             bottom.toFloat() - marginBottom - dpToPx(borderWidthDp)
                         )
-                        viewTreeObserver.removeOnGlobalLayoutListener(this);
+                        viewTreeObserver.removeOnGlobalLayoutListener(this)
                     }
                 }
             }
@@ -84,7 +84,7 @@ class CornerOverlayView(
     )
 
     // Parse XML attributes and initialize local variables to provided (or default) values
-    fun getResources(attrs: AttributeSet?) {
+    private fun parseXmlAttributes(attrs: AttributeSet?) {
         //Look for attributes declared in XML
         context.theme.obtainStyledAttributes(
             attrs,

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_go_to_gallery"
+        android:icon="@drawable/icon_folder_white"
+        android:title="@string/menu_item_title_go_to_gallery"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_go_to_camera"
+        android:icon="@drawable/icon_camera_shutter_white"
+        android:title="@string/menu_item_title_go_to_camera"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/menu_go_to_favorites"
+        android:icon="@drawable/icon_star_yellow"
+        android:title="@string/menu_item_title_go_to_favorites"
+        app:showAsAction="always" />
+
+</menu>

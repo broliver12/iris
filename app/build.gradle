@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion ver.version.compileSdkVersion
+    defaultConfig {
+        applicationId ver.project.appId
+        minSdkVersion ver.version.minSdkVersion
+        targetSdkVersion ver.version.targetSdkVersion
+        versionCode ver.version.versionCode
+        versionName ver.version.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = ver.version.kotlinJvmTarget
+    }
+    kapt {
+        generateStubs = true
+    }
+}
+
+dependencies {
+
+    // Androidx
+    implementation ver.deps.coreKtx
+    implementation ver.deps.appCompat
+    implementation ver.deps.constraintLayout
+    implementation ver.deps.recyclerView
+    implementation ver.deps.room
+
+    // Misc
+    implementation ver.deps.kotlinStdlib
+    implementation ver.deps.gson
+
+    // Coroutines
+    implementation ver.deps.coroutines
+    implementation ver.deps.viewModelScope
+    implementation ver.deps.lifeCycleScope
+
+    // Rx3
+    implementation ver.deps.rxAndroid
+    implementation ver.deps.rxBinding
+    implementation ver.deps.rxRoom
+
+    // Annotation Processor
+    kapt ver.deps.roomAp
+
+    // Test
+    testImplementation ver.deps.junit
+    androidTestImplementation ver.deps.testExt
+    androidTestImplementation ver.deps.espresso
+}

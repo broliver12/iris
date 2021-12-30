@@ -125,6 +125,7 @@ class ColorPickerFragment(
         }
 
         viewModel.selectedImage.subscribe { x ->
+            binding.mainImageContainer.setZoom(1f)
             binding.mainImageContainer.setImageURI(x)
         }
     }

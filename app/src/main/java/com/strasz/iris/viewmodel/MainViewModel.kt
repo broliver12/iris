@@ -26,7 +26,7 @@ class MainViewModel(
     private lateinit var colorPickerView: IColorPickerView
     private val changedImage = PublishSubject.create<Uri>()
     private var lastImage: Uri? = null
-    override val selectedImage: Observable<Uri> = changedImage
+    override val selectedImage: Observable<Uri> = changedImage.distinctUntilChanged()
 
     override fun bindView(view: IColorPickerView) {
         colorPickerView = view

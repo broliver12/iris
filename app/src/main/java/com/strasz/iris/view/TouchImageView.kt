@@ -25,6 +25,18 @@ import android.widget.Scroller
 import androidx.appcompat.widget.AppCompatImageView
 import com.strasz.iris.view.TouchImageView.*
 
+/**************************************************************
+ ***       Originally written by Mike Ortiz & others:       ***
+ ***       https://github.com/MikeOrtiz/TouchImageView      ***
+ ***       Original code available under MIT license        ***
+ ***       Thanks a lot folks!                              ***
+ **************************************************************
+ ***        Converted to kotlin, modified, optimized         ***
+ ***        by Oliver Straszynski                           ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class TouchImageView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,

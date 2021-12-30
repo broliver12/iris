@@ -29,6 +29,7 @@
         </provider>
         <activity
             android:name="com.strasz.iris.view.MainActivity"
+            android:theme="@style/IrisAppTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

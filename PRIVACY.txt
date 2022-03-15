@@ -1,0 +1,13 @@
+Iris: Privacy Policy (c) 2022
+
+This is an open source Android app developed for personal interest by Oliver Straszynski.
+
+The source code is available on GitHub under the MIT license.
+The app is available on Google Play.
+
+This app does not, and will never, collect any personal data.
+This app does not, and will never, sell any data to a 3rd party.
+This app does not track your location.
+There is not currently any form of analytics implemented in this app.
+
+All colors data is stored on your phone, and will be permanently lost if the app is deleted, or the data is cleared.

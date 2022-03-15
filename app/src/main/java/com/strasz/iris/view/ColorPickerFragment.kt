@@ -35,6 +35,12 @@ import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.launch
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class ColorPickerFragment(
     private val viewModel: IColorPickerViewModel,
     private val navCallback: () -> Unit
@@ -94,6 +100,8 @@ class ColorPickerFragment(
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity?)!!.setSupportActionBar(binding.mainToolbar)
         viewModel.bindView(this)
+
+        binding.mainImageContainer.maxZoom = 60f
 
         binding.saveButton.apply {
             isEnabled = false

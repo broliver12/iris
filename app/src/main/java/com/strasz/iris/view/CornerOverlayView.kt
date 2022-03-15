@@ -16,6 +16,11 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginRight
 import com.strasz.iris.R
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
 
 class CornerOverlayView(
     context: Context,

@@ -12,6 +12,12 @@ import com.strasz.iris.databinding.FragmentColorListBinding
 import com.strasz.iris.viewmodel.IColorListViewModel
 import kotlinx.coroutines.launch
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class ColorListFragment(
     private val viewModel: IColorListViewModel,
     private val navCallback: () -> Unit

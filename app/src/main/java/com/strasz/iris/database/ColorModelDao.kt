@@ -8,6 +8,12 @@ import androidx.room.Query
 import com.strasz.iris.database.App.Companion.COLOR_TABLE_NAME
 import io.reactivex.Observable
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 @Dao
 interface ColorModelDao {
     @Query("SELECT * FROM $COLOR_TABLE_NAME")

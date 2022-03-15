@@ -5,6 +5,12 @@ import androidx.annotation.ColorInt
 import com.strasz.iris.view.IColorPickerView
 import io.reactivex.Observable
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 interface IColorPickerViewModel {
 
     fun bindView(view: IColorPickerView)

@@ -7,6 +7,12 @@ import com.strasz.iris.database.ColorModel
 import com.strasz.iris.databinding.SavedColorTileBinding
 import com.strasz.iris.util.ColorUtil
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class ColorTileViewHolder(private val binding: SavedColorTileBinding, private val cb: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
     private enum class TileState {

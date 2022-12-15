@@ -9,3 +9,5 @@
 gradlew
 gradlew.bat
 /app/build
+/app/debug
+

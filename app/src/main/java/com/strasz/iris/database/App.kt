@@ -3,6 +3,12 @@ package com.strasz.iris.database
 import android.app.Application
 import androidx.room.Room
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class App : Application() {
     companion object {
         private lateinit var database: ColorDatabase

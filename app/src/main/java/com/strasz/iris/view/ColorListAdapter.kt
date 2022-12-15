@@ -7,6 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import com.strasz.iris.database.ColorModel
 import com.strasz.iris.databinding.SavedColorTileBinding
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class ColorListAdapter(
     private val removeFromDbCallback: (ColorModel) -> Unit
 ) : ListAdapter<ColorModel, ColorTileViewHolder>(ColorListItemDiffUtil()) {

@@ -17,6 +17,12 @@ import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class MainViewModel(
     private val database: ColorModelDao
 ) : ViewModel(), IColorPickerViewModel, IColorListViewModel {
@@ -26,7 +32,7 @@ class MainViewModel(
     private lateinit var colorPickerView: IColorPickerView
     private val changedImage = PublishSubject.create<Uri>()
     private var lastImage: Uri? = null
-    override val selectedImage: Observable<Uri> = changedImage
+    override val selectedImage: Observable<Uri> = changedImage.distinctUntilChanged()
 
     override fun bindView(view: IColorPickerView) {
         colorPickerView = view

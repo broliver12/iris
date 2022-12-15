@@ -4,6 +4,12 @@ import android.graphics.Color
 import kotlin.math.min
 import kotlin.math.round
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 abstract class ColorUtil {
     companion object {
         private val Int.r
@@ -34,7 +40,13 @@ abstract class ColorUtil {
                 yellowValue = (yellowValue - kValue) / sValue
             }
 
-            return String.format("[%d, %d, %d, %d]", cyanValue.rnd(), magentaValue.rnd(), yellowValue.rnd(), kValue.rnd())
+            return String.format(
+                "[%d, %d, %d, %d]",
+                cyanValue.rnd(),
+                magentaValue.rnd(),
+                yellowValue.rnd(),
+                kValue.rnd()
+            )
         }
 
         private fun Float.rnd() = round(this * 100).toInt()

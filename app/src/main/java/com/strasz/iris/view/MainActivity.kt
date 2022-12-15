@@ -12,6 +12,12 @@ import com.strasz.iris.R
 import com.strasz.iris.database.App
 import com.strasz.iris.viewmodel.MainViewModel
 
+/**************************************************************
+ ***        Originally written by Oliver Straszynski        ***
+ ***        https://github.com/broliver12/                  ***
+ ***        Subject to MIT License (c) 2021                 ***
+ **************************************************************/
+
 class MainActivity : AppCompatActivity() {
 
     // Initialize shared ViewModel

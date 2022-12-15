@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strasz.iris.databinding.FragmentColorListBinding
 import com.strasz.iris.viewmodel.IColorListViewModel
+import kotlin.math.round
 import kotlinx.coroutines.launch
 
 /**************************************************************
@@ -43,7 +44,12 @@ class ColorListFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.colorListRecyclerView.apply {
-            layoutManager = GridLayoutManager(requireContext(), GRID_SPAN)
+
+            val width = resources.displayMetrics.widthPixels
+            val wDpi = resources.displayMetrics.xdpi
+            val wInches = round(width / wDpi).toInt()
+
+            layoutManager = GridLayoutManager(requireContext(), wInches)
             adapter = listAdapter
         }
         binding.backButton.setOnClickListener {
@@ -54,9 +60,5 @@ class ColorListFragment(
                 listAdapter.submitList(x)
             }
         }
-    }
-
-    companion object {
-        private const val GRID_SPAN = 3
     }
 }

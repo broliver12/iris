@@ -41,10 +41,15 @@ import kotlinx.coroutines.launch
  ***        Subject to MIT License (c) 2021                 ***
  **************************************************************/
 
-class ColorPickerFragment(
-    private val viewModel: IColorPickerViewModel,
-    private val navCallback: () -> Unit
-) : Fragment(), IColorPickerView {
+class ColorPickerFragment() : Fragment(), IColorPickerView {
+
+    private lateinit var viewModel: IColorPickerViewModel
+    private lateinit var navCallback: () -> Unit
+
+     constructor(vm: IColorPickerViewModel, navCb: () -> Unit) : this(){
+         viewModel = vm
+         navCallback = navCb
+     }
 
     private lateinit var binding: FragmentColorPickerBinding
 

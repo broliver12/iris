@@ -8,11 +8,11 @@ Download the source code from this repository, and build locally in Android Stud
 
 OR 
 
-Install the  [debug apk](https://wiggleworld.mypinata.cloud/ipfs/QmUuhHcLku6rb44JBtjHRDLZ8pDXMZ13T3Ke4vZhnU3L25/app-debug.apk)
+Install the [apk](https://github.com/broliver12/iris/blob/master/app/release/app-release.aab)
 
 ## Usage
 
-Take a picture, or load an existing one.
+Open Iris. Take a picture, or load one from your gallery.
 
 Zoom in, and select the desired shade of colour.
 
@@ -22,6 +22,6 @@ Navigate to the palette page, where you can browse your saved colours.
 
 ## Gallery
 
-<img width=60% src=https://wiggleworld.mypinata.cloud/ipfs/QmUuhHcLku6rb44JBtjHRDLZ8pDXMZ13T3Ke4vZhnU3L25/Webp.net-resizeimage%20%282%29.png>
+<img width=60% src=https://github.com/broliver12/iris/blob/master/img/tablet_landscape.png>
 
-<img width=60% src=https://wiggleworld.mypinata.cloud/ipfs/QmUuhHcLku6rb44JBtjHRDLZ8pDXMZ13T3Ke4vZhnU3L25/Webp.net-resizeimage%20%281%29.png>
+<img width=60% src=https://github.com/broliver12/iris/blob/master/img/palette_tablet_landscape.png>

@@ -22,6 +22,6 @@ Navigate to the palette page, where you can browse your saved colours.
 
 ## Gallery
 
-<img width=60% src=https://github.com/broliver12/iris/blob/master/img/tablet_landscape.png>
+<img width=60% src="https://github.com/broliver12/iris/blob/master/img/tablet_landscape.png?raw=true">
 
-<img width=60% src=https://github.com/broliver12/iris/blob/master/img/palette_tablet_landscape.png>
+<img width=60% src="https://github.com/broliver12/iris/blob/master/img/palette_tablet_landscape.png?raw=true">

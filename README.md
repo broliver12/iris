@@ -8,7 +8,7 @@ Download the source code from this repository, and build locally in Android Stud
 
 OR 
 
-Install the [apk](https://github.com/broliver12/iris/blob/master/app/release/app-release.aab)
+Install the [apk](https://github.com/broliver12/iris/blob/master/app/release/app-debug.apk)
 
 ## Usage
 
